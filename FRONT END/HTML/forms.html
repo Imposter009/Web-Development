@@ -1,0 +1,81 @@
+<!-- FORMS -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Forms</title>
+</head>
+
+<body>
+    <h2>This is HTML forms tutorial</h2>
+    <!-- FOR CREATING A FORM  -->
+    <form action="backend.php">
+
+        <!-- ACTION ATTRIBUTE IS GIVEN TO LINK THE BACKHAND FILE WITH THE FORM I.E THE LOCATION WHERE 
+        THE INPUTS OF THE FORM WILL BE STORED -->
+
+        <label for="name_"> Name:</label>
+        <!-- 1.LABEL TAG IS USED IF WE WANT TO ACCESS THE INPUT BOX USING THE NAME ASSOCIATED WITH IT   2.THE NAME OF THE 'FOR' AND 'ID' SHOULD BE SAME.
+        3.THE NAME BETWEEN THE LABEL TAGS SHOULD BE THE NAME THAT WE WANTED TO WRITE BEFORE INPUT. -->
+        <div>
+            <input type="text" name="myName" id="name_">
+            <!-- INPUT TAGS ARE USED TO TAKE INPUT FROM USER-->
+        </div>
+        <br>
+        <div>
+            Role: <input type="text" name="myRole">
+        </div>
+        <br>
+        <div>
+            Email: <input type="email" name="myEmail">
+        </div>
+
+        <br>
+        <div>
+            Date: <input type="date" name="myDate">
+        </div>
+        <br>
+        <div>
+            Bonus: <input type="number" name="myBonus">
+        </div>
+        <br>
+        <div>
+            Are you eligible?: <input type="checkbox" name="myEligibility" checked>
+            <!-- DEFINING IT AS CHECKED  IN THE LAST WILL MAKE IT CHECKED BY DEFAULT-->
+        </div>
+        <br>
+        <div>
+            Gender: Male <input type="radio" name="myGender"> Female <input type="radio" name="myGender">
+            Other <input type="radio" name="myGender">
+        </div>
+
+        <br>
+        <div>
+            Write about yourself: <br><textarea name="myText" cols="90" rows="10"></textarea>
+        </div>
+
+        <br>
+        <div>
+            <label for="car">Car</label>
+            <select name="myCar" id="car">
+                <!-- SELECT WILL ALLOW USER TO CHOOSE BETWEEN OPTIONS -->
+                <option value="ind">Indica</option>
+                <option value="swf" selected>Swift</option>
+               <!-- DEFINING AS SELECTED WILL CHOOSE THIS OPTION AS DEFAULT  -->
+            </select>
+        </div>
+        <br>
+
+        <div>
+            <input type="submit" value="Submit Now">
+            <input type="reset" value="Reset Now">
+        </div>
+        <!-- FOR SUBMITTING OR RESETTING THE FORM  -->
+    </form>
+</body>
+<p>this &#8203;</p>
+</html>

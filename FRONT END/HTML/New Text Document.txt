@@ -1,0 +1,8 @@
+<html>
+    <head>
+        <title>sumit</title>
+    </head>
+    <body>
+        <img src="sam.jpg" height="150px"  width="150px" border="2px" alt="" />
+    </body> 
+</html>

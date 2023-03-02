@@ -1,0 +1,7 @@
+alt z= word wrap
+alt upward=move line up
+alt downward=move line down
+ctrl upward=copy line up
+ctrl downward=copy line down
+ctrl enter= to bring pointer at next line
+

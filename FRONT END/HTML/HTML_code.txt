@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>sumit</title>
+    </head>
+    <body>
+        <h1> this is heading</h1>
+        <p><span> this is normal text</span></p>
+       <p><b> this is bold text</b></p>
+       <p><i> this is italic text</i></p>
+       <p><strong> this is strong text</strong></p>
+       <p> <big>this is big text</big></p>
+       <p> <small>this is small text</small></p>
+       <p><sub> this is subscripted text</sub></p>
+       <p><sup> this is superscripted text</sup></p>
+       <p><ins> instert text</ins></p>
+       <p><del> delete text</del></p>
+    </body> 
+</html>

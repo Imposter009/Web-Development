@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* We can take the help of universal selector in the CSS to apply a specific property in all the elements available. It is denoted with a ‘*’ */
+
+    * {
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container {
+        /*Background image:: */
+        background-image: url('https://codewithharry.com/static/common/img/photo.png');
+        background-repeat: no-repeat;
+        /* repeat-x and repeat-y will make it repeat on x and y axis */
+        /* background-position: 192px 34px; */
+        background-position: center center;
+        /* background-position: bottom right; */
+        /* background-position: top center; */
+
+        /* padding/margin:: 
+
+        We can set margin/padding for  top, bottom, left and right like this */
+        /* padding-top: 79px;
+            padding-bottom: 79px;
+            padding-left: 34px; 
+            padding-right: 79px;*/
+
+        /* margin-top: 3px;
+            margin-bottom: 5px;
+            margin-left: 34px;
+            margin-right:5px ; */
+
+        /* margin = top right bottom left;  */
+        /* padding = top right bottom left;  */
+
+        /* padding: 23px 56px 6px 78px;   */
+        /* margin: 23px 56px 6px 78px;   */
+
+        /* padding: y(top/bottom) x(left/right); */
+        /* margin: y(top/bottom) x(left/right); */
+
+        padding: 34px 19px;
+        margin: 14px 19px;
+        border-radius: 23px;
+        width: 533px;
+
+        /* Let us now understand a property called ‘Box sizing’. On giving width to the element and after that applying padding in the container, the width also changes. It is because in the actual width of an element, margin is already been added into it. If you want this not to happen then you can use the property of ‘box-sizing’. */
+
+        box-sizing: border-box;
+
+    }
+
+    .box {
+        --box-color: violet;
+        /* creating a variable */
+        border: 4px solid black;
+        background-color: grey;
+        margin: 4px 0px;
+        padding: 23px;
+        width: 30%;
+        display: inline-block;
+    }
+
+    .container-2
+
+    /* container-2 is flex class */
+        {
+        height: 544px;
+        width: 100%;
+        border: 2px solid black;
+        display: flex;
+        /* Initialize the container as a flex box */
+
+        /* Flex properties for a flex container */
+
+        /*=> flex-direction:"it defines the way our element will align themselves i.e row or column wise "*/
+
+        /* flex-direction: row; (Default value of flex-direction is row).*/
+        /* flex-direction: column;
+           flex-direction: row-reverse;
+           flex-direction: column-reverse; */
+
+        /*=> flex-wrap: "it defines the wrapping of element i.e on decreasing the size of screen the element will automatically come in next line" */
+
+        /* flex-wrap: wrap; (Default value of flex-direction is no-wrap).*/
+        /* flex-wrap: wrap-reverse; */
+
+        /*=> flex-flow: "This is a shorthand for flex-direction: and flex-wrap:" */
+
+        /* flex-flow: row-reverse wrap; */
+
+        /*=> justify-content will justify the content in horizontal direction */
+
+        /* justify-content: center; */
+        /* justify-content: space-between; */
+        /* justify-content: space-evenly; */
+        /* justify-content: space-around; */
+
+        /*=> align-items: "will justify the content in vertical direction" */
+        /* align-items: center; */
+        /* align-items: flex-end; */
+        /* align-items: flex-start; */
+        /* align-items: stretch; */
+    }
+
+    .item {
+        width: 200px;
+        height: 200px;
+        background-color: tomato;
+        border: 2px solid green;
+        margin: 10px;
+        padding: 3px;
+    }
+
+    #item-1 {
+        /* this is flex item */
+        /* Flex properties for a flex item */
+        /* Higher the order, later it shows up in the container */
+        /* order: 2; */
+
+        /* flex-grow: 2;
+            flex-shrink: 2; */
+
+    }
+
+    #item-2
+    /* this is flex item */
+
+        {
+        /* flex-grow: 3;
+            flex-shrink: 3 ; */
+        flex-basis: 160px;
+        /* when flex-direction is set to row flex-basis: will control width */
+        /* when flex-direction is set to column flex-basis: will control height */
+    }
+
+    #item-3
+    /* this is flex item */
+
+        {
+        /* flex: 2 2 230px; */
+        align-self: flex-start;
+        align-self: flex-end;
+        align-self: center;
+
+    }
+
+    /* Media Queries */
+    @media screen and (max-width: 800px) {
+        #contents {
+            width: 90%
+        }
+    }
+
+    @media (min-width: 450px) and (max-width: 600px) {
+        #box2 {
+            display: block;
+            background-color: teal;
+        }
+    }
+
+    /* targetting element by attribute or nth child */
+    input {
+        display: block;
+    }
+
+    input[type='text'] {
+        padding: 23px;
+        border: 2px solid red;
+    }
+
+    a[target] {
+        font-size: 44px;
+        color: violet;
+    }
+
+    a[target='_self'] {
+        font-size: 14px;
+        color: rgb(13, 22, 151);
+    }
+
+    input[type='email'] {
+        color: yellow;
+        border: 4px solid black;
+    }
+
+    /* This will apply css for third child */
+    /* li:nth-child(3){
+color: cyan;
+}
+
+li:nth-child(2n+0){
+color: red;
+} */
+
+    li:nth-child(3n+3) {
+        color: red;
+    }
+
+    /* Odd child */
+    /* li:nth-child(odd){
+background-color: yellow;
+} */
+
+    /* Even child */
+    li:nth-child(even) {
+        background-color: yellow;
+    }
+
+    .box {
+
+        /* syntax 1=> box-shadow: offset-x offset-y color; */
+        /* syntax 2=> box-shadow: offset-x offset-y blur-radius color; */
+        /* syntax 3=> box-shadow: offset-x offset-y blur-radius spread-radius color; */
+        /* syntax 4=> box-shadow: inset 3px 5px green; */
+        /* the offset-x and offset-y can be in negative too. blur-radius is the radius in which the colour will look blur. spread-radius is the radius in which the color will be spread in all the direction. inset means inside the box */
+
+        /* box-shadow: 10px 13px green; */
+        /* box-shadow: -10px -13px green; */
+        /* box-shadow: 7px 5px 10px green;
+        box-shadow: -7px -5px 10px green; */
+        /* box-shadow: -7px -5px 10px 34px green; */
+        /* box-shadow: -7px -5px 10px 34px rgba(71, 172, 172, 0.5); */
+        box-shadow: inset 3px 5px green;
+
+        /* adding two shadows */
+        box-shadow: inset 3px 5px green, 4px 6px red;
+    }
+
+    .card h2 {
+        /* syntax 1=> text-shadow: offset-x offset-y color; */
+        /* syntax 2=> text-shadow: offset-x offset-y blur-radius color; */
+        text-shadow: -3px -2px 2px white;
+    }
+
+    .box {
+        /* animations */
+        position: relative;
+        /* animation-name: harry1; */
+        animation-name: harry2;
+        animation-duration: 8s;
+        animation-iteration-count: 1;
+        /* animation-fill-mode: alternate; */
+        /* animation-timing-function: ease-in-out; */
+        /* animation-delay: 3s; */
+        /* animation-direction: reverse;  */
+
+        /* These properties can be set using this shorthand */
+
+        /* animation: animation-name animation-duration animation-timing-function animation-delay animation-iteration-count animation-fill-mode; */
+        /* EG:: animation: harry 5s ease-in 1s 12 backwards; */
+    }
+
+    @keyframes harry2 {
+        0% {
+            top: 0px;
+            left: 0px;
+        }
+
+        25% {
+            top: 250px;
+            left: 0px;
+        }
+
+        75% {
+            top: 250px;
+            left: 250px;
+        }
+
+        100% {
+            top: 0px;
+            left: 250px;
+        }
+
+    }
+
+    @keyframes harry1 {
+        from {
+            width: 200px;
+        }
+
+        to {
+            width: 1400px;
+        }
+    }
+
+    .box {
+        /* transitions */
+        /* transition-property: background-color;
+        transition-duration: 1s;
+        transition-timing-function: ease-in-out;
+        transition-delay: 2s; */
+
+        /* Transition short hand property in one line 
+         transition: transition-propert , duration , timing-function , delay; */
+        /* if we want all transition to work using the single line command we write all in place of transition-property */
+
+
+        transition: all 1s ease-in-out .3s;
+    }
+
+    #box:hover {
+        background-color: green;
+        height: 400px;
+        width: 400px;
+        border-radius: 100px;
+        font-size: 45px;
+
+    }
+
+    .grid {
+        /* Grid Layout */
+        display: grid;
+        grid-template-rows: 1fr 1fr 4fr;
+        grid-auto-rows: 2fr;
+        grid-template-columns: 1fr 4fr 2fr;
+        /* However, till now if we notice, these grid systems are not responsive which may leave a bad user experience. Therefore, we can make the use of repeat function which will fix the number of columns */
+        /* grid-template-columns: repeat(4, 2fr); */
+        grid-gap: 1rem;
+    }
+
+    .box:first-child {
+        /* targetting first div  */
+        /* when we want to merge many colums/rows into one we us this */
+
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 3;
+
+        /* we can do this in one step as follows: */
+        /* grid-column: 1 / span 3;
+        grid-row: 1 / span 3; */
+
+    }
+
+    /* grid area */
+        {
+        .container {
+            grid-template-areas:
+                'navbar navbar navbar navbar'
+                'section section section aside'
+                'footer footer footer footer ';
+        }
+
+        #navbar {
+            grid-area: navbar;
+        }
+
+        #section {
+            grid-area: section;
+        }
+
+        #aside {
+            grid-area: aside;
+        }
+
+        footer {
+            grid-area: footer;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        
+        <div class="box">
+            <h3>This is my heading</h3>
+            <p id="first">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt harum quis, quibusdam,
+                minima
+                molestiae tempore vel magni, repellendus doloribus debitis rerum tenetur eveniet.</p>
+        </div>
+
+        <div class="box">
+            <h3>This is my heading</h3>
+            <p id="second">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt harum quis, quibusdam,
+                minima
+                molestiae tempore vel magni, repellendus doloribus debitis rerum tenetur eveniet.</p>
+        </div>
+
+        <div class="box">
+            <h3>This is my heading</h3>
+            <p id="third">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt harum quis, quibusdam,
+                minima
+                molestiae tempore vel magni, repellendus doloribus debitis rerum tenetur eveniet.</p>
+        </div>
+
+        <h1><a href="http://google.com" target="_blank">Go to google</a></h1>
+        <h1><a href="http://facebook.com" target="_self">Go to Facebook</a></h1>
+        <form action="" class="form-control">
+            <input type="text" placeholder="Enter your name">
+            <input type="email" placeholder="Enter your email">
+            <input type="password" placeholder="Enter your password">
+            <input type="submit" value="Submit">
+        </form>
+        <ul>
+            <li class="item" id="item-1">Item1</li>
+            <li class="item" id="item-2">Item2</li>
+            <li class="item" id="item-3">Item3</li>
+            <li class="item" id="item-4">Item4</li>
+            <li class="item" id="item-5">Item5</li>
+            <li class="item" id="item-6">Item6</li>
+            <li class="item" id="item-7">Item7</li>
+            <li class="item" id="item-8">Item8</li>
+            <li class="item" id="item-9">Item9</li>
+            <li class="item" id="item-10">Item10</li>
+        </ul>
+        <!-- GRID-AREAS -->
+        {
+        <div id="navbar" class="item">
+            Home About Contact Us
+        </div>
+        <div id="section" class="item">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi conse
+        </div>
+        <div id="aside" class="item">Lorem ipsum dolor sit amet con cupiditate.
+        </div>
+        <footer class="item">Lorem, ipsum dolor sit amet consectetur
+            }
+    </div>
+
+    <div class="container-2">
+        <div class="item" id="item-1">First Box</div>
+        <div class="item" id="item-2">Second Box</div>
+        <div class="item" id="item-3">Third Box</div>
+        <div class="item" id="item-4">Fourth Box</div>
+        <div class="item" id="item-5">Fifth Box</div>
+        <div class="item" id="item-6">Sixth Box</div>
+    </div>
+</body>
+
+</html>
+
+<!-- 
+=>Display inline means it will take the space according to the size of the element. Display block means we can set its width and by margin manually.
+Now suppose we want to make an element inline as well as customize its width too, then in that case we can use inline-block.
+To ensure that all the different blocks come in a single line, we can use the property box-sizing. It ensure that the width we provide is not changed including padding and margin.
+
+=>relative: Positions the element relative to its normal positon and will leave a gap at its normal position*/
+         position: relative; 
+        
+  absolute: Positions the element relative to the positon of its first parent
+         position: absolute; 
+
+         top: 34px;
+         left: 134px; 
+
+  fixed: Positions the element relative to the browser window; 
+         position: fixed;
+         
+         right: 4px;
+         bottom: 2px 
+
+  sticky: Positions the element relative to the users scroll position 
+
+=>The ::before pseudo-element can be used to insert some content before the content of an element. The ::after pseudo-element can be used to insert some content after the content of an element.
+  CODE:(for adding image in background)
+  header::before{
+            background: url('https://source.unsplash.com/collection/190727/1600x900') no-repeat center center/cover;
+            content: "";
+            position: absolute; it is important when we use ::before pseudo selector to position the image
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; for making the contents appear above the background image
+            opacity: 0.3; to make the image lighter
+        }
+=>The important point to remember about the CSS variables is it can be used within its scope only. To make it work, we can write it again or can use the --root property. To make it understand clearer, we can make a global variable in terms of programming language.eg:
+:root{
+            --primary-color: blue;
+            --danger-color: red;
+            --maxw: 333px;
+        }
+        
+=>ANIMATIONS::
+>we need to start by giving the animation-name
+> "animation-duration": is used to decide how long our animation will run. 
+
+> "animation-iteration-count": is used to decide the number of times the animation will run.
+
+> "animation-fill-mode": If we want to keep the last property applied to the animation then we can set the animation-fill-property as forward 
+
+> "animation-timing-function":
+We can define this property with three different values-
+1.ease-in. After applying this, the animation will start slowly and becomes fast towards the end.
+2.ease-out. After applying this, the animation will begin fastly and become slow towards the end.
+3.ease-in-out. After applying this, the animation will start slowly, then become fast in the midway, and ends slowly.
+> "animation-delay": It is used to define the time after which the animation will start.
+> "animation-direction": This property is used to define the direction of the animation. For example, if we select it as reverse, it will move the animation in reverse direction.
+
+>The "keyframes" are used to make the animation. From and to are used to decide how the animation will move in the webpage. 
+
+=>Transition-property- It is used to decide which transition property we want to use. For example, if we want to transition background color
+>Transition-duration- If we want to see the duration which is required to make the change, we can use this property
+
+>Transition-timing-function- This property is used to decide the speed of transition from beginning to end. These are of three types as follows-
+
+1.ease-in. After applying this, the animation will start slowly and becomes fast towards the end.
+2.ease-out. After applying this, the animation will begin fastly and become slow towards the end.
+3.ease-in-out. After applying this, the animation will start slowly, then become fast in the midway, and ends slowly.
+
+>Transition-delay- It is that particular time interval after which the transition effect will start.
+
+=>The grid-template-rows property is used to divide the first, second, and third rows in given fractions. The other rows will be set as two times the normal size. It is done with the help of grid-auto-rows. 
+=>The grid-gap is used to decide the gap between the two grids.
+=>the grid-template-columns is used to decide the number of columns used in the grid.
+
+
+-->

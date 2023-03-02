@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JavaScript </title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Lorem ipsum dolor sit.</h1>
+        <div id="content"></div>
+        <p id="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam nisi, quaerat corrupti quas, illum
+            nobiseiciendis eius officiis doloremque ipsa?</p>
+        <button> id="btn" onclick="toggleHide()">Show/Hide</button>
+        Current time is <span id="time"></span>
+    </div>
+
+    <script>
+        // Strings and String Methods
+        var string = "this";
+        // We will see that the “this” word is reflected back on the console tab in the browser. However, apart from the double quotes, we can also write a Sting in a single quote as ‘this’. It is recommended to use double quotes when we are using single quotes between the strings.
+        var string = 'thi"s';
+        var name = 'Harry';
+        var channel = 'CodeWithHarry';
+        var message = 'Harry is a good boy';
+
+        // template literals are `. $ symbol is used here to pick that particular string from the variable. The main benefit of using this method is, we can use both double quotes or single quotes to identify the strings.
+
+        var temp = `${name} is a 'nice' person "and" he has a channel called ${channel}`;
+        // console.log(string + name + message);
+        // console.log(temp);
+        // var len = name.length;
+        // console.log(`Length of name is ${len}`)
+
+        // console.log("Hello \n world\nHarry\tand");
+
+        // string constructor
+        var y = new String("this");
+        console.log(y);
+        document.getElementById('content').innerHTML = '<h3>this is an h3 heading</h3>'
+
+        {
+            // string functions
+
+            // First occurence of a substring
+            var position = str.indexOf('is');
+            console.log(position)
+
+            // Last occurence of a substring
+            position = str.lastIndexOf('is');
+            console.log(position)
+
+            // Substring from a string
+            // var substr = str.slice(1,7);
+            // var substr = str.substring(1,7);
+            var substr1 = str.substr(1, 3);
+            console.log(substr1)
+
+            // var replaced = str.replace('string', 'Harry');
+            // console.log(str)
+            // console.log(replaced)
+
+            // console.log(str.toUpperCase());
+            // console.log(str.toLowerCase());
+            // var newString = str.concat('New String')
+            // console.log(newString)
+            // var strWithWhitespaces = "   this contains        whitespaces   ";
+            // console.log(strWithWhitespaces)
+            // console.log(strWithWhitespaces.trim())
+
+            // var char2 = str.charAt(2);
+            // var char2 = str.charCodeAt(2); // Not very important
+            // console.log(char2)
+
+            console.log(str[3])
+
+        }
+
+        {
+            // let: when the value of the variable has to be changed or the same variable name has to be used, to define the scope properly
+            let a = "u";
+            {
+                let a = "u6";
+                console.log(a)
+            }
+            // console.log(a)
+
+            // const a = "This cannot be changed";
+            // a = "I want to change this. This cannot be changed";
+            // console.log(a);
+            // let age = 5;
+            // if(age>18){
+            //     console.log("You can drink water");
+            // }
+            // else if(age==2){
+            //     console.log("Age is 2")
+            // }
+            // else if(age==5){
+            //     console.log("Age is 5")
+            // }
+            // else{
+            //     console.log("You can drink Cold Drink");
+            // }
+
+
+            // const cups = 47; 
+            // switch (cups) {
+            //     case 4:
+            //         console.log("The value of cups is 4")
+            //         break;
+
+            //     case 41:
+            //         console.log("The value of cups is 41")
+            //         break;
+
+            //     case 42:
+            //         console.log("The value of cups is 42")
+            //         break;
+
+            //     case 43:
+            //         console.log("The value of cups is 43")
+            //         break;
+
+            //     default:
+            //         console.log("The value of cups is none of 4, 41, 42, 43")
+            //         break;
+            // }
+
+        }
+
+        {
+            // array and object 
+
+            // object: 
+            // let employee = {
+            //     name: "Harry",
+            //     salary: 10,
+            //     channel: "CodeWithHarry",
+            //     "channel 2": "ProgrammingWithHarry",
+            // }
+            // console.log(employee);
+
+            // array 
+            // let names = [1, 2, 4, "Harry", undefined];
+
+            // let names = new Array(41, 2, 4, "Harry", undefined);
+            // We can also create arrays with the help of a new keyword.In this way, an array will be treated as an object. 
+            let names = new Array(23);
+            console.log(names.length);
+            names = names.sort();
+            names.push("this is pushed");
+            // will input "this is pushed" at the end of array 
+            console.log(names);
+        }
+
+        {
+            // functions in js
+            function greet(name, greetText) {
+                console.log(greetText + " " + name);
+                console.log(name + " is a good boy");
+            }
+            let name = "Harry";
+            let name1 = "Shubham";
+            let name2 = "Rohan";
+            let name3 = "Sagar";
+            let greetText = "Good Morning";
+            greet(name, greetText);
+            greet(name1, greetText);
+            greet(name2, greetText);
+            greet(name3);
+            function sum(a, b, c) {
+                let d = a + b + c;
+                return d;
+            }
+        }
+
+        {
+            // Alert in in-browser JavaScript - Does not return anything, just display a message on the screen
+            // alert("This is a message"); 
+
+            // Prompt in JS- will take input from user and saves it.syntax:prompt("Message for user", "Default Ans");
+            // let name = prompt("What is your name?", "Guest");
+            // console.log(name);
+
+            // Confirm in JS-it will warn you as a final warning.okay means true and cancel means false 
+            let deletePost = confirm("Do you really want to delete this post?");
+
+            // console.log(deletePost);
+            if (deletePost) {
+                // Code to delete the post
+                console.log("Your post has been deleted successfully");
+            }
+            else {
+                // Code to cancel deletion of the post
+                console.log("Your post has not been deleted");
+            }
+
+        }
+
+        {
+            // loops
+
+            // let i = 0;
+            // for(i=0; i<3;i++){
+            //     console.log(i);
+            // }
+
+            // for array 
+            let friends = ["Rohan", "Sanjeev", "Deepti", "Pooja", "SkillF"];
+            // method 1: 
+            // for (let index = 0; index < friends.length; index++) {
+            //     console.log("Hello friend, " + friends[index]);
+            // }
+
+            // method 2: 
+            // friends.forEach(function f(element){
+            //     console.log("Hello Friend, " + element + " to modern JavaScript");
+            // });
+
+            // method 3: 
+            // for (element of friends){
+            //     console.log("Hello Friend, " + element + " to modern JavaScript again");
+            // }
+
+
+            // for object
+            let employee = {
+                name: "Harry",
+                salary: 2,
+                channel: "CWH"
+            }
+
+            // Use this loop to iterate over objects in JavaScript
+            for (key in employee) {
+                console.log(`The ${key} of employee is ${employee[key]}`);
+            }
+
+            // while loop in js
+            let i = 0;
+            while (i < 4) {
+                console.log(`${i} is less than 4`);
+                i++;
+            }
+
+            // do while loop in js
+            let j = 34;
+            do {
+                console.log(`${j} is less than 4 and we are inside do while loop`);
+                j++;
+            } while (j < 4);
+
+        }
+
+        {
+            //EVENTS:
+
+            let para = document.getElementById('para');
+            para.addEventListener('mouseover', function run() {
+                console.log('Mouse Inside')
+            });
+
+            para.addEventListener('mouseout', function run() {
+                console.log('Mouse now went outside')
+            });
+
+
+            function toggleHide() {
+                // let btn = document.getElementById('btn');
+                let para = document.getElementById('para');
+                if (para.style.display != 'none') {
+                    para.style.display = 'none';
+                }
+                else {
+                    para.style.display = 'block';
+                }
+            }
+
+            function greet(name, byeText) {
+                console.log("Hello Good Morning " + name + " " + byeText);
+            }
+            // setTimeout --> Alllows us to run the function once after the interval of time
+
+            // Syntax of setTimeout: setTimeout(function's name,time in millisec,arguments if any) 
+            timeOut = setTimeout(greet, 5000, "Harry", "Take Care");
+            console.log(timeOut);
+
+            // The setTimeout() method calls a function or evaluates an expression after a specified number of milliseconds. This function is only executed once. Use the clearTime() method to prevent the function running.timeOut is just a variable here
+
+            // clearTimeout --> Alllows us to run the function repeatedly after the interval of time
+            clearTimeout(timeOut);
+
+            // setTimeout(greet(), 12000); --> Wrong as it is calling the function inside setTimeout
+
+            // setInterval()--> if we want to keep running a function after a particular interval
+            // Syntax of setInterval: setInterval(function's name,time in millisec,arguments if any) 
+            intervalId = setInterval(greet, 1000, "Harry", "Good Night");
+            clearInterval(intervalId);
+        }
+        {
+            //ADDING DATE
+
+            let now = new Date();
+            console.log(now);
+
+            // let newDate = new Date("2029-09-30");
+            // console.log(newDate)
+
+            // let newDate = new Date(year, month, date, hours, minutes, seconds, milliseconds);
+            let newDate = new Date(3020, 4, 6, 9, 3, 2, 34);
+            console.log(newDate);
+
+            // to get any particular detail from date 
+            let yr = newDate.getFullYear();
+            console.log("The year is ", yr);
+
+            let dat = newDate.getDate();
+            console.log("The date is ", dat);
+
+            let month = newDate.getMonth();
+            console.log("The month is ", month);
+
+            let hours = newDate.getHours();
+            console.log("The hours is ", hours);
+
+            // to change the date according to ourself 
+            newDate.setDate(8);
+            newDate.setMinutes(29);
+            console.log(newDate)
+
+            setInterval(updateTime, 1000);
+
+            // The JavaScript innerHTML property sets the HTML contents of an element on a web page.The innerHTML property returns: The text content of the element, including all spacing and inner HTML tags. The innerText property returns: Just the text content of the element
+            function updateTime() {
+                time.innerHTML = new Date();
+            }
+        }
+        {
+            // function greet() 
+            // { console.log('Good morning'); }
+
+
+            // Arrow function
+            // syntax1:
+            // let greet= ()=> 
+            //{ console.log('Good morning'); }
+
+            // syntax2:a,b are parantheis here
+            // let greet= (a,b)=> 
+            //{body}
+
+            // syntax3:a is parantheis here
+            // let greet= a=>
+            //{body}
+
+            // syntax4:this is wrong
+            // let greet= a,b=> 
+            //   {  body }
+
+            let greet = () => console.log('Good morning');
+
+
+            // let sum2 = (a, b)=>{
+            //     return a+b;
+            // };
+
+            let sum2 = (a, b) => a + b;
+            // will automatically return
+            let half = a => a / 2;
+
+
+            greet();
+            setTimeout(() => {
+                console.log("We are inside settimeout");
+            }, 3000);
+
+            let obj1 = {
+                greeting: "Good Morning",
+                names: ["Harry", "Rohan", "SkillF", "DjKhiladi"],
+                speak() {
+                    this.names.forEach((student) => {
+                        console.log(this.greeting + " Kukdoo Koo " + student);
+                    });
+                }
+            }
+            obj1.speak();
+            // "This" variable is normally used to point the variable inside the function. But in the case of arrow functions, it points the variable outside the function. This is known as lexical this. 
+        }
+        {
+            // Printing the Math Object
+            let m = Math;
+            console.log(m)
+
+            // Printing the constants from Math Object
+            console.log("The value of Math.E is ", Math.E)
+            console.log("The value of Math.PI is ", Math.PI)
+            console.log("The value of Math.LN2 is ", Math.LN2)
+            console.log("The value of Math.SQRT1_2 is ", Math.SQRT1_2)
+            console.log("The value of Math.LOG2E is ", Math.LOG2E)
+
+            // Printing the Functions from Math Object 
+            let a = 34.64534;
+            let b = 89;
+
+            console.log("The value of a and b is ", a, b);
+            console.log("The value of a and b rounded is ", Math.round(a), Math.round(b));
+
+            console.log("3 raised to the power of 2 is ", Math.pow(3, 2))
+            console.log("2 raised to the power of 12 is ", Math.pow(2, 12))
+            console.log("1 raised to the power of 2 is ", Math.pow(1, 2))
+
+            console.log("Square root of 36 is ", Math.sqrt(36))
+            console.log("Square root of 64 is ", Math.sqrt(64))
+            console.log("Square root of 50 is ", Math.sqrt(50))
+
+            // Ceil and floor
+            console.log("5.8 rounded up to nearest integer is ", Math.ceil(5.8))
+            console.log("5.8 rounded down to nearest integer is ", Math.floor(5.8))
+
+            // Abs function
+            console.log("Absolute value of 5.66 is  ", Math.abs(5.66))
+            console.log("Absolute value of -5.66 is  ", Math.abs(-5.66))
+
+            // Trinonometric Functions
+            console.log("The value of sin(pi) is ", Math.sin(Math.PI / 2))
+            console.log("The value of tan(pi) is ", Math.tan(Math.PI / 2))
+            console.log("The value of cos(pi) is ", Math.cos(Math.PI / 2))
+
+            // Min and max functions
+            console.log("Minimum value of 4, 5, 6 is ", Math.min(4, 5, 6));
+            console.log("Minimum value of 14, 5, 16 is ", Math.min(14, 5, 16));
+            console.log("Maximum value of 4, 5, 6 is ", Math.max(4, 5, 6));
+            console.log("Maximum value of 14, 5, 16 is ", Math.max(14, 5, 16));
+
+            // Generating a random number
+            let r = Math.random();
+            // Random number b/w (a, b) = a + (b-a)*Math.random()
+            let a1 = 50;
+            let b1 = 60;
+            let r50_60 = a1 + (b1 - a1) * Math.random();
+            console.log("The random number is ", r)
+            console.log("The random number is ", r50_60)
+        }
+        {
+            //JASON
+
+            let jsonObj = {
+            name: "Harry",
+            channel: "CWH",
+            friend: "Rohan Das",
+            food: "Bhindi" 
+        } 
+        console.log(jsonObj);
+        
+        //converting object into string
+        let myJsonStr = JSON.stringify(jsonObj);
+        console.log(myJsonStr);
+
+        myJsonStr = myJsonStr.replace('Harry', 'Larry');
+        console.log(myJsonStr)
+
+        //converting jason string into object again
+        newJsonObj = JSON.parse(myJsonStr);
+        console.log(newJsonObj)
+
+        }
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+<!-- >>What is JavaScript?
+JavaScript is a client side scripting language.
+It is used to make web pages alive.
+It is used to programmatically perform actions within the page.
+When JavaScript was created, it was initially called “LiveScript”.
+But Java was a very popular language at that time, so it was decided that positioning a language as a “younger brother” of Java would help.
+Now let us understand what the use of JavaScript is.
+
+
+>>What JavaScript can do?
+JavaScript can execute not only in the browser, but also on the server.
+ We will use JavaScript as a client as well as server side language.
+JavaScript has evolved greatly as a language and is now used to perform a wide variety of tasks. 
+
+
+
+>>What Can In-Browser JavaScript Do?
+If JavaScripts are used in any websites, then it should not be given any low level CPU permissions like switching off the CPU etc. That is why JavaScript is made with extremely safe permissions that does not have any permission to access low level CPU usage. 
+
+JavaScript can add new HTML and change existing HTML from DOM.
+It can even react to any events (actions).
+It can also manage the AJAX requests (GET or POST request)
+JavaScript can get and set cookies and use local storage.
+
+
+
+>>What Can’t In-Browser JavaScript Do?
+JavaScript cannot read or write to and from computer hard disk without user permissions. 
+The browser does not allow the JavaScript of any website to collect the AJAX information of the other website because it generates the error of  same origin policy.
+To summarize, JavaScript can only access the permitted resources but cannot access your documents on personal computers. 
+These strict policies are developed to make sure that your computer is safe.
+
+
+
+>>What Makes JavaScript a Unique language?
+ The most important thing that makes it a unique language is, it has a complete integration of HTML and CSS. They provide it with a lot of extra support.
+Also it provides the use of simple APIs (Application Programming Interface).
+It also supports the major modern browsers which are enabled by default. If you turn off the feature of JavaScript in the browser, you cannot access any website.
+
+
+>>Versions of JavaScript
+JavaScript is such an important language that it requires substantial updates to maintain its different versions. The ECMA is a standard maintained for any of the scripting languages that pushes for new updates. The ECMA was first launched in 1997. 
+
+>>The object class represents one of JavaScript’s data types. It is used to store various keyed collections and more complex entities
+
+>>HTML event can be something the browser does or something a user does.
+Here are some examples of HTML events:-
+An HTML web page has finished loading
+An HTML input field was changed
+An HTML button was clicked
+
+list of some common HTML events:-
+Onchange-  An HTML element has been changed
+Onclick- The user clicks an HTML element
+Onmouseover-   The user moves the mouse over an HTML element
+Onmouseout-The user moves the mouse away from an HTML element
+Onkeydown- The user pushes a keyboard key
+Onload- The browser has finished loading the page
+
+>> The JavaScript innerHTML property sets the HTML contents of an element on a web page.
+
+>>JSON stands for JavaScript Object Notation.JSON is a lightweight data-interchange format. JSON is language independent. JSON is "self-describing" and easy to understand
+
+>>
+-->
