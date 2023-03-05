@@ -1,3 +1,67 @@
+import React, { useState } from 'react'
+
+export default function Notes() {
+  /* how to apply black theme  */
+  const [Theme, setTheme] = useState({
+    color: 'black',
+    backgroundColor: 'white'
+  })
+
+  const [btn, setbtn] = useState(
+    "Change to Dark Mode"
+  )
+
+  const toggleStyle = () => {
+    if (Theme.backgroundColour === 'white') {
+      setTheme({
+        color: 'white',
+        backgroundColor: 'black'
+      })
+      setbtn(
+        "Change to Light Mode"
+      )
+    }
+    else {
+      setTheme({
+        color: 'black',
+        backgroundColour: 'white'
+      })
+      setbtn(
+        "Change to Dark Mode"
+      )
+    }
+
+  }
+  /* how to apply black theme*/
+  return (
+    <>
+      <div style={Theme}>
+        <h1 >HELLO WORLD</h1>
+        <button onClick={toggleStyle}>{btn}</button>
+      </div>
+    </>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 >>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc. 
 >>
@@ -8,12 +72,13 @@
 =>What is a State?
 state is plain JavaScript objects. state is managed within the component (similar to variables declared within a function).
 >Like normal variables, state can hold any datatype like strings, numbers, booleans, arrays, objects, objects in arrays, arrays in objects
-eg:: holding object.
+eg::
     const [data, setData] = useState({
         name: 'Lovish',
         age: 21
     })
-};
+    here data is initial state and setData will be new state.useState wale bracket me jo likjte hai wo initial value hoti hai.
+    
 =>What is a Hook?
 Hooks let you use state and other React features without writing a class
 >useState is a Hook that lets you add React state to function components.
