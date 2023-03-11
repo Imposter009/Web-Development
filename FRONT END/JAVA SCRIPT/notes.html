@@ -447,25 +447,85 @@
             //JASON
 
             let jsonObj = {
-            name: "Harry",
-            channel: "CWH",
-            friend: "Rohan Das",
-            food: "Bhindi" 
-        } 
-        console.log(jsonObj);
-        
-        //converting object into string
-        let myJsonStr = JSON.stringify(jsonObj);
-        console.log(myJsonStr);
+                name: "Harry",
+                channel: "CWH",
+                friend: "Rohan Das",
+                food: "Bhindi"
+            }
+            console.log(jsonObj);
 
-        myJsonStr = myJsonStr.replace('Harry', 'Larry');
-        console.log(myJsonStr)
+            //converting object into string
+            let myJsonStr = JSON.stringify(jsonObj);
+            console.log(myJsonStr);
 
-        //converting jason string into object again
-        newJsonObj = JSON.parse(myJsonStr);
-        console.log(newJsonObj)
+            myJsonStr = myJsonStr.replace('Harry', 'Larry');
+            console.log(myJsonStr)
 
+            //converting jason string into object again
+            newJsonObj = JSON.parse(myJsonStr);
+            console.log(newJsonObj)
         }
+
+        // API ::>
+
+        {
+            // when we  fetch some data by querying the API with GET requests. The JSON response that we receive is in the following format.
+            /*
+            "results":
+            [
+                {
+                    "gender": "female",
+                    "name": {
+                        "title": "Miss",
+                        "first": "Nina",
+                        "last": "Simmmons"
+                    },
+                    "location": {
+                        "street": {
+                            "number": 970,
+                            "name": "Eason Rd"
+                        },
+                        "city": "Fullerton",
+                        "state": "Wyoming",
+                        "country": "United States",
+                        "postcode": 57089,
+                        "coordinates": {
+                            "latitude": "83.1807",
+                            "longitude": "104.7170"
+                        }
+                    }
+                }
+            ];
+            */
+
+            // we need to have an HTML file for the frontend where you want to display the retrieved data.
+            {
+                /* yaha ki id match karegi received jsaon file ke data se. eg gender,age
+                
+                <div class="details">
+                    <table>
+                        <tr>
+                            <td>Age</td>
+                            <td><span id="age"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td><span id="gender"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Location</td>
+                            <td><span id="location"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Country</td>
+                            <td><span id="country"></span></td>
+                        </tr>
+                    </table>
+                </div>
+                */
+            }
+        }
+
     </script>
 
 </body>
@@ -539,5 +599,7 @@ Onload- The browser has finished loading the page
 
 >>JSON stands for JavaScript Object Notation.JSON is a lightweight data-interchange format. JSON is language independent. JSON is "self-describing" and easy to understand
 
->>
+>>what is an API?
+An API(Application Programming Interface) is simply a medium to fetch or send data between interfaces. We need to have an HTML file for the frontend where you want to display the retrieved data. We can use either the “div” tag (block-level) or the “span” tag (inline-level), which will act as a placeholder for the information. Using the “id” attribute, we can get the required “div/span” container where we want to place the information.
+To test an API for the type of response it gives Postman is an amazing application that will fulfill all your needs
 -->
