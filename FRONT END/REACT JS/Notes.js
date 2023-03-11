@@ -1,3 +1,4 @@
+// function based component 
 import React, { useState } from 'react'
 
 export default function Notes() {
@@ -42,8 +43,55 @@ export default function Notes() {
     </>
   )
 }
+// function based component
 
 
+// class  based component
+
+/*
+// news.js
+{
+  export class news extends Component {
+    render() {
+      return {
+        < newsid />
+      }
+  }
+}
+
+// newsid.js
+{
+  export class newsid extends Component {
+    render() {
+      return {
+        <div className=" "></div>
+      }
+  }
+}
+*/
+
+import React, { Component } from 'react'
+
+// creating a class. name will be same as files name and it will extend component
+export class Notes extends Component {
+
+  //creating a constructor,constructor will be called when the component(newsId) gets initiated.it is important to write super()
+  constructor() {
+    super();
+
+    // component properties should be kept in an object called state
+    this.state = {title: "code"};
+  }
+  //React renders HTML to the web page by using a function called render().The purpose of the function is to display the specified HTML code inside the specified HTML element.In the render() method, we can read props and state and return our JSX code to the root component of our app.
+  render() {
+    // taking props
+    let { title, description } = this.props;
+    return {
+
+    }
+  }
+}
+// class  based component
 
 
 
@@ -63,9 +111,12 @@ export default function Notes() {
 
 
 /*
->>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc. 
->>
-
+>>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc.
+>>React.js library has two components:
+1.Class components
+2.Functional Components 
+>>react is use to make single page application. isse banaye gaye page reload nhi hote. usme bs kuch components change ho jate hai baaki as it is rehta hai mtlb baar baar repeat hone wali cheeze server se nhi aati. 
+>>ek page se dusre page pr jaane ke liye anchor(<a>) use nhi karenge uski jagha router,switch, link use karenge.
 
 
 
@@ -77,8 +128,10 @@ eg::
         name: 'Lovish',
         age: 21
     })
-    here data is initial state and setData will be new state.useState wale bracket me jo likjte hai wo initial value hoti hai.
-    
+    >>here data is initial state and setData will be new state.useState wale bracket me jo likjte hai wo initial value hoti hai.
+>>useState ko hum log funtion ke start me hi likhenge aur kisi block ke andar nhi warna error dikhayega.
+
+
 =>What is a Hook?
 Hooks let you use state and other React features without writing a class
 >useState is a Hook that lets you add React state to function components.
