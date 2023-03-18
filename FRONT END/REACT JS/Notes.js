@@ -65,29 +65,34 @@ export default function Notes() {
     render() {
       return {
         <div className=" "></div>
-      }
+      }  
   }
 }
 */
 
 import React, { Component } from 'react'
 
+
 // creating a class. name will be same as files name and it will extend component
 export class Notes extends Component {
+
+  //componentDidMount(){} is always called after render
+  componentDidMount() { let url = "url of the API which we will be using" }
+
+  article = [eg1, eg2]
 
   //creating a constructor,constructor will be called when the component(newsId) gets initiated.it is important to write super()
   constructor() {
     super();
 
     // component properties should be kept in an object called state
-    this.state = {title: "code"};
+    this.state = { title: "code", example: this.article };
   }
   //React renders HTML to the web page by using a function called render().The purpose of the function is to display the specified HTML code inside the specified HTML element.In the render() method, we can read props and state and return our JSX code to the root component of our app.
   render() {
     // taking props
     let { title, description } = this.props;
     return {
-
     }
   }
 }
