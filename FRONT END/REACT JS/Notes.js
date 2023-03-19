@@ -79,36 +79,48 @@ export class Notes extends Component {
   //componentDidMount(){} is always called after render
   componentDidMount() { let url = "url of the API which we will be using" }
 
-  article = [eg1, eg2]
-
   //creating a constructor,constructor will be called when the component(newsId) gets initiated.it is important to write super()
   constructor() {
     super();
 
-    // component properties should be kept in an object called state
+    // component properties should be kept in an object called state. it is  a use state
     this.state = { title: "code", example: this.article };
   }
   //React renders HTML to the web page by using a function called render().The purpose of the function is to display the specified HTML code inside the specified HTML element.In the render() method, we can read props and state and return our JSX code to the root component of our app.
   render() {
     // taking props
     let { title, description } = this.props;
+    // changing state of title
+    this.setState({ title: new_name })
     return {
     }
   }
 }
+
+/*
+>>in class based component we will use `this` operator with every variable or state. eg= this.state.title
+>>in class we use this.props and we define it in class component as defaultProps and propTypes. defaultProps is use to give default value to our props and propTypes are use to tell which kind of prop wil come.
+eg <newsId author="sumit" number=8/>
+class newsID()
+{
+  static defaultProps={
+    author:' unknown',
+    number: 10
+  }
+  static propTypes={
+    author: PropTypes.string,
+    number: PropType.number
+  }
+  this.state={title = "code "}
+}
+render (){
+  return {
+           console.log(${this.prop.author});
+  }
+}
+*/
+
 // class  based component
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -119,11 +131,13 @@ export class Notes extends Component {
 >>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc.
 >>React.js library has two components:
 1.Class components
-2.Functional Components 
+2.Functional Components
+
 >>react is use to make single page application. isse banaye gaye page reload nhi hote. usme bs kuch components change ho jate hai baaki as it is rehta hai mtlb baar baar repeat hone wali cheeze server se nhi aati. 
+
 >>ek page se dusre page pr jaane ke liye anchor(<a>) use nhi karenge uski jagha router,switch, link use karenge.
 
-
+>>{{}} outer bracket js ke liye aur inner object ke liye. eg: <h1 style={{margin:'10px';}} > <h1/>
 
 =>What is a State?
 state is plain JavaScript objects. state is managed within the component (similar to variables declared within a function).
@@ -160,4 +174,6 @@ export default Blogs;
 </>
 >useState takes initial state as argument and gives a state and a function(setName in this case) to update that state as we can't directly change/update a state. Also, these state names are just like variables, hence you can name them anything you like.
 >it returns a state and a function to change/update that state. Hence, everything is stored in name
+
+>>
 */
