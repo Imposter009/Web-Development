@@ -1,4 +1,4 @@
-// function based component 
+l// function based component 
 import React, { useState } from 'react'
 
 export default function Notes() {
@@ -71,6 +71,12 @@ export default function Notes() {
 */
 
 import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
 // creating a class. name will be same as files name and it will extend component
@@ -92,13 +98,29 @@ export class Notes extends Component {
     let { title, description } = this.props;
     // changing state of title
     this.setState({ title: new_name })
-    return {
-    }
+    return
+    (
+      //creating router to switch between different components
+      <Router >
+        <Switch>
+          {/* on clicking on about it will switch to About component.  */}
+          <Route path="/about">
+            <newsid key="0" />
+          </Route>
+          <Route path="/users">
+            <newsid key="1" />
+          </Route>
+          <Route path="/">
+            <newsid key="2" />
+          </Route>
+        </Switch>
+      </Router>
+    );
   }
 }
 
 /*
->>in class based component we will use `this` operator with every variable or state. eg= this.state.title
+>>in class based component we will use `this` operator with every variable or state or function. eg= this.state.title, onClick={this.funName}
 >>in class we use this.props and we define it in class component as defaultProps and propTypes. defaultProps is use to give default value to our props and propTypes are use to tell which kind of prop wil come.
 eg <newsId author="sumit" number=8/>
 class newsID()
@@ -123,11 +145,24 @@ render (){
 // class  based component
 
 
+/*
+REACT ROUTER:
+to install: yarn add react-router-dom
 
+>>to switch beteen component on clicking we will use link tag. link is modified anchor tag. we will change <a> to <link> and `href` to `to` 
+<link to="/home">home</link>
 
+on clicking on the link option tjinh(i.e home here) it will get route to its path(i.r /home)
+<route exact path="/home"><home/><route>
 
+A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. 
+>> we use `exact` to exactly match the path  with the location.pathname.
+>> `key` if we want to call same component again and again with differnet props then we need to give them different key to differentiate them, so that they can get rendered
 
 /*
+
+
+
 >>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc.
 >>React.js library has two components:
 1.Class components
