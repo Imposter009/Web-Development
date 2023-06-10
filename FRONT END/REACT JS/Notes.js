@@ -33,6 +33,8 @@ export default function Notes() {
     }
 
   }
+// how to call a component correctly is this: reactDom.render(<CompName />,location) not this: reactDom.render(CompName (),location)
+
   /* how to apply black theme*/
   return (
     <>
@@ -161,13 +163,14 @@ A <Switch> looks through its children <Route>s and renders the first one that ma
 
 /*
 
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 >>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc.
 >>React.js library has two components:
 1.Class components
 2.Functional Components
 
+>>react is 1) composable:mtlb har component ko alag alag likhte hai. 2) declarative: mtlb hum sirf batate hai ki kya karna hai.
 >>react is use to make single page application. isse banaye gaye page reload nhi hote. usme bs kuch components change ho jate hai baaki as it is rehta hai mtlb baar baar repeat hone wali cheeze server se nhi aati. 
 
 >>ek page se dusre page pr jaane ke liye anchor(<a>) use nhi karenge uski jagha router,switch, link use karenge.
