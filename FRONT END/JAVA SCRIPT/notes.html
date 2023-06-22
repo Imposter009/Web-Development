@@ -603,3 +603,92 @@ Onload- The browser has finished loading the page
 An API(Application Programming Interface) is simply a medium to fetch or send data between interfaces. We need to have an HTML file for the frontend where you want to display the retrieved data. We can use either the “div” tag (block-level) or the “span” tag (inline-level), which will act as a placeholder for the information. Using the “id” attribute, we can get the required “div/span” container where we want to place the information.
 To test an API for the type of response it gives Postman is an amazing application that will fulfill all your needs
 -->
+
+<!-- 
+>>`this`:: this keyword refers to an object.
+The this keyword refers to different objects depending on how it is used::
+1.In an object method, this refers to the object.
+eg: 
+<>
+person is an object
+const person = {
+  firstName: "John",
+  lastName : "Doe",
+  id       : 5566,
+  fullName : function() {
+    return this.firstName + " " + this.lastName;
+  }
+};
+</>
+
+2.Alone, this refers to the global object.
+eg:
+<>
+let x = this;
+</>
+
+3.In a function, this refers to the global object.
+eg:
+<>
+function myFunction() {
+  return this;
+}
+</>
+
+4.In a function, in strict mode, this is undefined.
+5.In an event, this refers to the element that received the event.
+eg:
+<.>
+<button onclick="this.style.display='none'">
+  Click to Remove Me!
+</button>
+</>
+
+6.Methods like call(), apply(), and bind() can refer this to any object.
+
+>>`Arrow Function`::
+
+Before Arrow:
+hello = function(val) {
+  return "Hello World!";
+}
+
+With Arrow Function:
+hello = (val) => {"Hello " + val};
+}
+*Arrow Functions Return Value by Default, This works only if the function has only one statement.
+
+Arrow Function Without Parentheses: only used when we have only one parenthesis
+hello = val => "Hello " + val;
+
+
+*Imp* In regular functions the this keyword represented the object that called the function, which could be the window, the document, a button or whatever.With arrow functions the this keyword always represents the object that defined the arrow function.eg::
+const person = {
+  firstName: "John",
+  lastName : "Doe",
+  id       : 5566,
+  fullName : function() {
+    let that= this;
+    setTimeout(function(){
+      console.log(that.firstName)
+    })
+  }
+};
+we can't refer to firstName inside a function of the function using 'this' if we make normal function bec then it will give us global value.therefore we will use like this.
+ Thus we use arrow function to simplify
+
+const person = {
+  firstName: "John",
+  lastName : "Doe",
+  id       : 5566,
+  fullName : function() {
+    setTimeout(()=>{
+      console.log(this.firstName)
+    })
+  }
+};
+*arrow function automatically this apne lexical parent(bahar wala) se le leta hai. isiliye we can use it
+
+
+>>
+ -->

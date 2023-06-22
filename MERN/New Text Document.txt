@@ -14,7 +14,7 @@ Features exactly like routing, styling, authentication, bundle optimization etc.
 :There's no need to install additional packages. Next.js provides everything for you
 Opinions and conventions need to be followed to implement the above said features
 :Server side rendering of UI elements
-:helps in SEO
+:helps in SEO	
 :many packages are already installed
 :contains html css and js in browser(hence server side)
 

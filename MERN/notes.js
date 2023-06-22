@@ -1,6 +1,6 @@
 /*
-1. useEffect:: whenever we want to interact with outside world we use 
-
+1. useEffect:: whenever we want to interact with outside world we use this
+2. getInitalProps
 
 #NEXT JS
 > to create a Next Js app::
@@ -12,7 +12,7 @@ npx create-next-app
 2.npm install semantic-ui-react semantic-ui-css
   import 'semantic-ui-css/semantic.min.css'      :: Semantic UI React is the official React integration for Semantic UI 
 
-3.  
+3. axios
 
 
 */
