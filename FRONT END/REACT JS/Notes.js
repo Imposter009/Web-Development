@@ -33,7 +33,7 @@ export default function Notes() {
     }
 
   }
-// how to call a component correctly is this: reactDom.render(<CompName />,location) not this: reactDom.render(CompName (),location)
+  // how to call a component correctly is this: reactDom.render(<CompName />,location) not this: reactDom.render(CompName (),location)
 
   /* how to apply black theme*/
   return (
@@ -213,5 +213,145 @@ export default Blogs;
 >useState takes initial state as argument and gives a state and a function(setName in this case) to update that state as we can't directly change/update a state. Also, these state names are just like variables, hence you can name them anything you like.
 >it returns a state and a function to change/update that state. Hence, everything is stored in name
 
->>
+>>`HIGHER ORDER COMPONENT` 
+a higher-order component is a function that takes a component and returns a new component.::
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+
+>>`PURE COMPONENT` 
+React pure components are the components that do not re-render when the value of props and state has been updated with the same values. Since these components do not cause re-rendering when the same values are passed thus they improve performance
+
+>>` REACT LIFE CYCLE`  
+each component in React has a lifecycle which you can monitor and manipulate during its three main phases.The three phases are: Mounting, Updating, and Unmounting.
+
+#:Mounting means putting elements into the DOM.
+React has four built-in methods that gets called, in this order, when mounting a component:
+1.constructor()
+2.getDerivedStateFromProps()
+3.render()
+4.componentDidMount()
+
+The render() method is required and will always be called, the others are optional and will be called if you define them.
+
+1.The constructor() method is called with the props, as arguments, and you should always start by calling the super(props) before anything else, this will initiate the parent's constructor method and allows the component to inherit methods from its parent (React.Component).
+eg::class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {favoritecolor: "red"};
+  }
+  render() {
+    return (
+      <h1>My Favorite Color is {this.state.favoritecolor}</h1>
+    );
+  }
+}
+
+ReactDOM.render(<Header />, document.getElementById('root'));
+
+3.The render() method is required, and is the method that actually outputs the HTML to the DOM.
+
+4.The componentDidMount() method is called after the component is rendered.
+This is where you run statements that requires that the component is already placed in the DOM.
+
+#:UPDATING A component is updated whenever there is a change in the component's state or props.
+React has five built-in methods that gets called, in this order, when a component is updated:
+
+1 getDerivedStateFromProps() This is the first method that is called when a component gets updated.
+2 shouldComponentUpdate() this method you can return a Boolean value(default true) that specifies whether React should continue with the rendering or not.
+3 render()
+4 getSnapshotBeforeUpdate() In the getSnapshotBeforeUpdate() method you have access to the props and state before the update, meaning that even after the update, you can check what the values were before the update.
+If the getSnapshotBeforeUpdate() method is present, you should also include the componentDidUpdate() method, otherwise you will get an error.
+5 componentDidUpdate() The componentDidUpdate method is called after the component is updated in the DOM.
+
+
+#:UNMOUNTING The next phase in the lifecycle is when a component is removed from the DOM, or unmounting as React likes to call it.
+React has only one built-in method that gets called when a component is unmounted:
+
+1.componentWillUnmount(),The componentWillUnmount method is called when the component is about to be removed from the DOM.eg::
+
+class Container extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {show: true};
+  }
+  delHeader = () => {
+    this.setState({show: false});
+  }
+  render() {
+    let myheader;
+    if (this.state.show) {
+      myheader = <Child />;
+    };
+    return (
+      <div>
+      {myheader}
+      <button type="button" onClick={this.delHeader}>Delete Header</button>
+      </div>
+    );
+  }
+}
+
+class Child extends React.Component {
+  componentWillUnmount() {
+    alert("The component named Header is about to be unmounted.");
+  }
+  render() {
+    return (
+      <h1>Hello World!</h1>
+    );
+  }
+}
+
+ReactDOM.render(<Container />, document.getElementById('root'));
+
+
+>>`PROPS `
+Props(properties) are arguments passed into React components
+
+for function::
+
+function Car(props) {
+  return <h2>I am a { props.brand }!</h2>;
+}
+
+function Garage() {
+  return (
+    <>
+      <h1>Who lives in my garage?</h1>
+      <Car brand="Ford" />
+    </>
+  );
+}
+
+for class::
+
+class Car extends component{
+  render(){
+  return <h2>I am a { this.props.brand }! {this.prop.children}</h2>;
+}
+}
+
+class garage extend component {
+  render(){
+  return (
+    <>
+      <h1>Who lives in my garage?</h1>
+      <Car brand="Ford"><h1>hello</h1></Car>
+    </h1>
+  );
+  }
+
+**in class we use `this` and in function we dont use it.
+
+>>`PROPS VS STATE`
+:Props are used to pass data and event handlers to its children components
+:Props are immutable - Once set, props cannot be changed
+:Props can be used in both functional and class components
+:Props are set by the parent component for the children components
+
+:State is used to store the data of the components that has to be rendered to the view
+:State holds the data and can change over time
+:State can only be used in class components
+:State is generally updated by event handlers
+
+
 */
