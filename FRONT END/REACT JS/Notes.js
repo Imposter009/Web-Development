@@ -352,6 +352,35 @@ class garage extend component {
 :State holds the data and can change over time
 :State can only be used in class components
 :State is generally updated by event handlers
+:State is initialized in the constructor
+
+>>` EVENTS `
+:React events are written in camelCase syntax:  onClick instead of onclick.
+:React event handlers are written inside curly braces:  onClick={shoot}  instead of onClick="shoot()".
+
+:To pass an argument to an event handler, use an arrow function.Example:
+function Football() {
+  const shoot = (a) => {
+    alert(a);
+  }
+
+  return (
+    <button onClick={() => shoot("Goal!")}>Take the shot!</button>
+  );
+}
+
+:Event handlers have access to the React event that triggered the function.Example:
+function Football() {
+  const shoot = (a, b) => {
+    alert(b.type);
+    
+    // 'b' represents the React event that triggered the function,in this case the 'click' event
+  }
+  return (
+    <button onClick={(event) => shoot("Goal!", event)}>Take the shot!</button>
+  );
+}
+
 
 
 */
