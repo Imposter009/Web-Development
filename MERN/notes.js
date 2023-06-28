@@ -242,20 +242,20 @@ DNS module is also used for performing name resolution without a network communi
 
                                                     #EXPRESS
 
->>Express is a flexible Node.js web application framework that provides a wide set of features to develop both web and mobile applications. It's a layer built on the top of the Node.js that helps manage a server and routes. Express.js makes it much easier and simpler to build a web server with the use of middleware, which can handle requests and responses
+>>Express is a flexible Node.js web application framework that provides a wide set of features to develop both web and mobile applications. It's a layer built on the top of the Node.js that helps manage a server and routes. Express.js makes it much easier and simpler to build a web server with the use of middleware(A request handler with access to the application's request-response cycle is known as middleware), which can handle requests and responses
 
 >Now look at some of the core features of the Express framework:
 :Used for designing single-page, multi-page, and hybrid web applications
 :Allows developers to set up middlewares for responding to HTTP Requests
 :Defines a routing table that is used to perform different actions based on the HTTP method and URL
 :Allows dynamic rendering of HTML Pages based on passing arguments to templates
-
+:Express is the most popular minimalistic framework. It is built upon the built-in module HTTP of NodeJS to facilitate the simple and easy interaction between frontend and backend logic through API
 
 var express = require('express');   //var express: Importing Express framework into our Node.js application
 var app = express();
 
 app.get('/’, function (req, res) {  
-  res.send(‘Hello World’);
+  res.send(‘Hello World’);  
 }
    app.get(): Callback function with parameters ‘request’ and ‘response’.
    The request object: It represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers, etc.
