@@ -268,6 +268,258 @@ var port = server.address().port
 consolelog("Example app listening at http://%s:%s", host, port)
 })
 
+:create an app by calling the express() function provided by the express framework
+:Routes are the endpoints of the server, which are configured on our backend server and whenever someone tries to access those endpoints they respond accordingly to their definition at the backend.::   app.anyMethod(path, function)
+:The req is a giant object which will be received from the user and res is an object which will be sent to the user after the function finishes execution.
+
+:Routes are the endpoints of the server, which are configured on our backend server and whenever someone tries to access those endpoints they respond accordingly to their definition at the backend. We can create routes for HTTP methods like get, post, put, and so on. 
+:GET requests are used to send only limited amount of data because data is sent into header :: app.get(path, function).
+app.get() function tells the server what to do when getting requests at a given route.
+  Browser search bar can only send get requests to receive resources from the server.eg localhost3000/home
+:POST requests are used to send large amount of data because data is sent in the body.
+:listen() function is used to bind and listen to the connections on the specified host and port.::                          app.listen(PORT, call_back_functuion()={}). listen() function, It requires path and callback as an argument.The callback function gets executed either on the successful start of the server or due to an error.
+:The req is a giant object which will be received from the user and res is an object which will be sent to the user after the function finishes execution.
+:status() method it takes an HTTP status code as an argument and when the response is returned, the status will be sent along.
+:The send() method takes a string, object, array, or buffer as an argument and is used to send the data object back to the client as an HTTP response, also there are lots of types of response in express like res.json() which is used to send JSON object, res.sendFile() which is used to send a file, etc.
+:The set() function is used to set HTTP header’s content type as HTML. When the browser receives this response it will be interpreted as HTML instead of plain text.
+:The express.json() middleware is used to parses the incoming request object as a JSON object. The app.use() is the syntax to use any middleware.const {name}, which is the syntax in ES6 to extract the given property/es from the object. Here we are extracting the name property which was sent by the user with this request object::app.use(express.json());
+
+#SENDING DATA TO SERVER::
+:The express.json() middleware is used to parses the incoming request object as a JSON object. The app.use() is the syntax to use any middleware. yaha mtlb user data bhejta hai Eg login id and password.
+:const {name}, which is the syntax in ES6 to extract the given property/es from the object. Here we are extracting the name property which was sent by the user with this request object.
+:humlog data bhejte hai json object ke form me along with path.  We are Accessing the route with Postman
+:eg::
+const express = require('express');
+
+const app = express();
+const PORT = 3000;
+
+app.use(express.json());
+app.post('/', (req, res)=>{
+	const {name} = req.body;
+	
+	res.send(`Welcome ${name}`);
+})
+
+app.listen(PORT, (error) =>{
+	if(!error)
+		console.log("Server is Successfully Running, and
+					App is listening on port "+ PORT)
+	else
+		console.log("Error occurred, server can't start", error);
+	}
+);
 
 
+#Sending Files from Server
+:there are majorly two methods to send files one is sending static files using middleware and the other one is sending a single file on a route.
+
+1.sending file as static file
+:express.static(), it accepts two arguments first one is the absolute root path of the directory(folder) whose files we are going to serve. eg: app.use(path, express.static(root, [options]));
+:he join() method takes two parameters and joins them as a path. we  need to request the path module first to use this function
+: __dirname which contains the path of the directory in which the current file exists.
+
+:eg::
+const express = require('express');
+  
+const app = express();
+const PORT = 3000;
+  
+const path = require('path')
+app.use('/static', express.static(path.join(__dirname, 'Static Files')))
+//we want to serve content of Static Files folder thats why we are adding it in the end of the current directory(main folder) name 
+:localhost:3000/static/file_name
+
+2. sending file as route
+:sendFile() function accepts an absolute URL of the file and whenever the route path is being accessed the server provides the file as an HTTP response. eg::res.sendFile(fileUrl)
+
+
+
+#FUNCTIONS
+>for all The options parameter contains various properties like inflate, limit, type, etc. 
+
+:The express.raw() function parses incoming request payloads into a Buffer and is based on body-parser.
+eg:: express.raw( [options] ).  ‘content-type’ – ‘application/octet-stream’ 
+
+:The express.Router() function is used to create a new router object. This function is used when you want to create a new router object in your program to handle requests. eg:: express.Router( [options] )
+
+:The express.text() function is a built-in middleware function in Express. It parses the incoming request payloads into a string and is based on body-parser.eg:: express.text( [options] )  ‘content-type: text/plain’ 
+
+
+:You NEED express.json() and express.urlencoded() for POST and PUT requests, because in both these requests you are sending data (in the form of some data object) to the server and you are asking the server to accept or store that data (object), which is enclosed in the body (i.e. req.body) of that (POST or PUT) Request
+
+Express provides you with middleware to deal with the (incoming) data (object) in the body of the request.
+a. express.json() is a method inbuilt in express to recognize the incoming Request Object as a JSON Object. This method is called as a middleware in your application using the code: app.use(express.json());
+b. express.urlencoded() is a method inbuilt in express to recognize the incoming Request Object as strings or arrays. This method is called as a middleware in your application using the code: app.use(express.urlencoded());
+
+:The express.urlencoded() function parses incoming requests with URL-encoded payloads and is based on a body parser
+.eg::express.urlencoded( [options] )     ‘content-type: application/x-www-form-urlencoded’ 
+The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false) or the qs library (when true).true precises that the req. body object will contain values of any type instead of just strings. The "extended" syntax allows for rich objects and arrays to be encoded into the URL-encoded format, allowing for a JSON-like experience with URL-encoded.
+eg:
+const express = require('express');
+const app = express();
+const PORT = 3000;
+app.use(express.urlencoded({ extended: false }));
+app.post('/', function (req, res) {
+    console.log(req.body);
+    res.end();
+});
+
+:body-parser (it is an NPM package) to do the same thing. It is developed by the same peeps who built express and is designed to work with express. body-parser used to be part of express. Think of body-parser specifically for POST Requests (i.e. the .post request object) and/or PUT Requests (i.e. the .put request object).
+code::
+In body-parser you can do
+//calling body-parser to handle the Request Object from POST requests
+var bodyParser = require('body-parser');
+//parse application/json, basically parse incoming Request Object as a JSON Object 
+app.use(bodyParser.json());
+//parse application/x-www-form-urlencoded, basically can only parse incoming Request Object if strings or arrays
+app.use(bodyParser.urlencoded({ extended: false }));
+//combines the 2 above, then you can parse incoming Request Object if object, with nested objects, or generally any type.
+app.use(bodyParser.urlencoded({ extended: true }));
+
+#APPLICATIONS
+:The app.locals object has properties that are local variables within the application. These variables are local to the application and are very useful. it is like storing a value in a variable.eg:: app.locals.email = 'demo@gmail.com'
+
+:The app.mountpath property contains one or more path patterns on which a sub-app was mounted.
+eg::on going  http://localhost:3000/user output: /user
+const express = require('express');
+const app = express(); // the main app
+const user = express(); // the sub app
+const PORT = 3000;
+
+user.get('/', function (req, res) {
+	console.log(user.mountpath); // /user
+	res.send('User Homepage');
+});
+
+app.use('/user', user); // Mounting the sub app
+
+app.listen(PORT, function(err){
+	if (err) console.log(err);
+	console.log("Server listening on PORT", PORT);
+});
+
+:The mount event is fired on a sub-app when it is mounted on a parent app and the parent app is basically passed to the callback function. eg:: app.on('mount', callback(parent))
+
+const express = require('express');
+const app = express(); // The main app
+const admin = express();
+const PORT = 3000;
+
+admin.on('mount', function (parent) {
+	console.log('Admin Mounted');
+});
+
+admin.get('/', function (req, res) {
+	res.send('Admin Homepage');
+});
+//Mounting the subapp over our main app
+app.use('/admin', admin);
+
+app.listen(PORT, function (err) {
+	if (err) console.log(err);
+	console.log("Server listening on PORT", PORT);
+});
+Console Output:::
+Admin Mounted
+Server listening on PORT 3000
+
+>on http://localhost:3000/admin, now you can see the following output on your screen:
+Admin Homepage
+
+eg:: 
+const express = require('express');
+const app = express(); // The main app
+const student = express();
+const teacher = express();
+const PORT = 3000;
+
+//Multiple mounting
+teacher.on('mount', function (parent) {
+	console.log('Teacher Mounted');
+});
+
+student.on('mount', function (parent) {
+	console.log('Student Mounted');
+});
+
+//Mounting the subapp over our main app
+app.use('/student', student);
+app.use('/teacher', teacher);
+
+app.listen(PORT, function (err) {
+	if (err) console.log(err);
+	console.log("Server listening on PORT", PORT);
+});
+Console Output::: 
+Student Mounted
+Teacher Mounted
+Server listening on PORT 3000
+
+:The app.all() function is used to route all types of HTTP requests. Like if we have POST, GET, PUT, DELETE, etc, requests made to any specific route, let’s say /user, so instead of defining different APIs like app.post(‘/user’), app.get(‘/user’), etc, we can define single API app.all(‘/user’) which will accept all type of HTTP request. ::app.all( path, callback )
+
+:The app.delete() function is used to route the HTTP DELETE requests to the path which is specified as a parameter with the callback functions being passed as a parameter.
+
+:The app.disable() function is used to set the boolean setting name to false. It is basically the shorthand for the app.set(name, false). So instead we can use app.disable(name) function to set the false boolean value to some system Express.js settings. app.disable(name)
+
+:The app.disabled() function is used to return the bool values of the setting name. It returns true if the setting name is disabled and returns false if the setting name is not disabled.:: app.disabled(name)
+
+:The app.enable() function is used to set the boolean value i.e. name to true. It is basically the shorthand for the app.set(name, true) or app.set(name, false). So instead we can use app.enable(name) function to set boolean values to some system Express.js settings.
+
+
+#REQUEST FUNCTION
+:The req.app property holds the reference to the instance of the Express application that is using the middleware. 
+
+:The req.baseUrl property is the URL path on which a router instance was mounted. The req.baseUrl property is similar to the mount path property of the app object, except app.mountpath returns the matched path pattern(s). 
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+const user = express.Router();
+
+user.get('/login', function (req, res) {
+	console.log(req.baseUrl);
+	res.end();
+})
+
+app.use('/user', user);
+
+app.listen(PORT, function (err) {
+	if (err) console.log(err);
+	console.log("Server listening on PORT", PORT);
+});
+Browser Output: 
+http://localhost:3000/user/login, now you can see the following output on your console:
+
+Server listening on PORT 3000
+/user
+
+:The req.body property contains key-value pairs of data submitted in the request body. By default, it is undefined and is populated when you use a middleware called body-parsing such as express.urlencoded() or express.json(). 
+
+:The req.cookies property is used when the user is using cookie-parser middleware. This property is an object that contains cookies sent by the request.
+const cookieParser = require('cookie-parser');
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+app.use(cookieParser());
+
+app.get('/', function (req, res) {
+	req.cookies.title = 'GeeksforGeeks';
+	console.log(req.cookies);
+	res.send();
+});
+
+app.listen(PORT, function (err) {
+	if (err) console.log(err);
+	console.log("Server listening on PORT", PORT);
+});
+ output on your console:
+
+Server listening on PORT 3000
+[Object: null prototype] { title: 'GeeksforGeeks' }
+
+:The req.fresh property returns true if the response is still ‘fresh’ in the client’s cache else it will return false
+
+:
 */
