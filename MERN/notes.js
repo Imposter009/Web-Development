@@ -521,5 +521,224 @@ Server listening on PORT 3000
 
 :The req.fresh property returns true if the response is still ‘fresh’ in the client’s cache else it will return false
 
-:
+:The req.accepts() function checks if the specified content types are acceptable on the basis of the requests Accept HTTP header field. The method returns the best match, else it returns false if none of the specified content types is acceptable. 
+::req.accepts( types )
+eg::
+app.get('/', function (req, res) {
+    console.log(req.get('Accept'));
+    console.log(req.accepts('application/json'));
+    res.end();
+    //here it accepts application/json type
+on http://localhost:3000/ with the header set to ‘ Accept: application/json’, then you will see the following output on your console:
+
+Server listening on PORT 3000
+application/json
+application/json
+
+eg::
+app.get('/', function (req, res) {
+    console.log(req.get('Accept'));
+    console.log(req.accepts('text/plain'));
+    res.end();
+});
+//here it accept text
+on http://localhost:3000/ with the header set to ‘ Accept: application/json’, then you will see the following output on your console:Output:
+
+Server listening on PORT 3000
+application/json
+false
+
+:The req.acceptsCharsets() function returns the first accepted charset of the specified character sets on the basis of the request’s Accept-Charset HTTP header field otherwise it returns false if none of the specified charsets is accepted.
+:: req.acceptsCharsets(charset [, ...])
+eg:
+app.get('/', function (req, res) {
+    console.log(req.get('Accept-Charset'));
+    console.log(req.acceptsCharsets('UTF-8'));
+    res.end();
+});
+http://localhost:3000/ with the header set to ‘ Accept-Charset: UTF-8’, then you will see the following output on your console:
+UTF-8
+UTF-8
+
+:The req.acceptsEncodings() function returns the first accepted encoding of the specified encodings on the basis of the request Accept-Encoding HTTP header field and it returns false if none of the specified encodings is accepted.encoding mtlb kis zip hai ya kis tarha ki encoded file
+::req.acceptsEncodings(encoding [, ...])
+app.get('/', function (req, res) {
+    console.log(req.get('Accept-Encoding'));
+    console.log(req.acceptsEncodings('gzip'));
+    res.end();
+});
+GET request to http://localhost:3000/ with the header set to ‘Accept-Encoding: gzip’, then you will see the following output on your console:
+Server listening on PORT 3000
+gzip
+gzip
+
+#RESPONSE PROPERTIES
+:The res.app property holds a reference to the instance of the Express application that is using the middleware. 
+app.get('/', function (req, res) {
+    console.log(res.app.get('views'));
+    res.end();
+});
+ http://localhost:3000/, now you can see the following output on your console:
+C:\Users\Lenovo\Downloads\Geeksforgeeks Internship\NEW\Express\views
+
+:The res.headersSent property is a boolean property that indicates if the app sent HTTP headers for the response.
+
+app.get('/', function (req, res) {
+ 
+    //Before res.send()
+    console.log(res.headersSent);
+    res.send('OK');
+});
+ http://localhost:3000/, now you can see the following output on your console:
+Server listening on PORT 3000
+false
+
+app.get('/', function (req, res) {
+    res.send('OK');
+ 
+    //After res.send()
+    console.log(res.headersSent);
+});
+ http://localhost:3000, now you can see the following output on your console:
+Server listening on PORT 3000
+true
+
+
+:The res.locals property is an object that contains response local variables scoped to the request and because of this, it is only available to the view(s) rendered during that request/response cycle (if any). 
+app.get('/', function (req, res) {
+ 
+    // Sending multiples locals
+    res.locals.name = 'Gourav';
+    res.locals.age = 13;
+    res.locals.gender = 'Male'
+ 
+    console.log(res.locals);
+    res.end();
+});
+ Server listening on PORT 3000
+[Object: null prototype] { name: 'Gourav', age: 13, gender: 'Male' }
+
+:The res.append() function appends the specified value to the HTTP response header field and if the header is not already set then it creates the header with the specified value.:: res.append(field, [ value])
+Parameter: The field parameter describes the name of the field that need to be appended and the value parameter can be a string or an array.
+
+:The res.attachment() function is used to set the HTTP response Content-Disposition header field to ‘attachment’. If the name of the file is given as a filename, then it sets the Content-Type based on the extension name through the res.type() function and finally sets the Content-Disposition ‘filename = ‘ parameter.
+app.get('/', function (req, res) {
+    res.attachment('Hello.txt');
+    console.log(res.get('Content-Disposition'));
+});
+OUTPUT::attachment; filename="Hello.txt"
+
+:The res.download() function transfers the file at the path as an ‘attachment’. Typically, browsers will prompt the user to download:: res.download(path [, filename] [, options] [, fn])
+res.download('Hello.txt');
+
+:The res.end() function is used to end the response process. This method actually comes from the Node core, specifically the response.end() method of HTTP.ServerResponse. Use to quickly end the response without any data::res.end([data] [, encoding])
+
+:The router.all() function is just like the router.METHOD() methods, except that it matches all HTTP methods (verbs). It is very helpful for mapping global logic for arbitrary matches or specific path prefixes.
+::router.all(path, [callback, ...] callback)
+// Setting multiple routes
+router.all('/user', function (req, res) {
+    console.log("User Page Called");
+    res.end();
+});
+ 
+router.all('/student', function (req, res) {
+    console.log("Student Page Called");
+    res.end();
+});
+ 
+router.all('/teacher', function (req, res) {
+    console.log("Teacher Page Called");
+    res.end();
+});
+ 
+app.use(router);
+output:: User Page Called 
+Student Page Called 
+Teacher Page Called    
+
+
+:The router.METHOD() method provides the routing functionality in Express, where METHOD is one of the HTTP methods, such as GET, PUT, POST, and so on, in lowercase.::router.METHOD(path, [callback, ...] callback)
+// Multiple routes
+router.get('/user', function (req, res, next) {
+    console.log("GET request called");
+    res.end();
+});
+ 
+router.post('/user', function (req, res, next) {
+    console.log("POST request called");
+    res.end();
+});
+ 
+router.delete('/user', function (req, res, next) {
+    console.log("DELETE request called");
+    res.end();
+})
+ 
+app.use(router);
+output::
+GET request called
+POST request called
+DELETE request called
+
+:The parameters of router.param() are a name and function. Where the name is the actual name of the parameter and the function is the callback function. Basically, the router.param() function triggers the callback function whenever the user routes to the parameter. This callback function will be called only a single time in the request-response cycle, even if the user routes to the parameter multiple times.::router.param(name, function)
+router.param("userId", (req, res, next, id) => {
+    console.log("This function will be called first");
+    next();
+});
+ 
+router.get("/user/:userId", (req, res) => {
+    console.log("Then this function will be called");
+    res.end();
+});
+http://localhost:8000/user/343
+
+
+:The router.route() function returns an instance of a single route that you can then use to handle HTTP verbs with optional middleware. You can also use the router.route() function to avoid duplicate route naming as well as typing errors.
+// Multiple routing
+router.route('/user')
+    .get(function (req, res, next) {
+        console.log("GET request called");
+        res.end();
+    })
+    .post(function (req, res, next) {
+        console.log("POST request called");
+        res.end();
+    })
+    .put(function (req, res, next) {
+        console.log("PUT request called");
+        res.end();
+    });
+ 
+app.use(router);
+ Now make GET, POST, and PUT requests to http://localhost:3000/, you can see the following output on your screen:
+
+Server listening on PORT 3000
+GET request called
+POST request called
+PUT request called
+
+
+:The router.use() function uses the specified middleware function or functions. It basically mounts middleware for the routes which are being served by the specific router::router.use( path, function )
+Parameters:
+Path: It is the path to this middleware, if we can have /user, now this middleware is called for all API’s having /user of this router.
+function: This function is passed as a callback, it is called when the specified path is called in this router.
+
+// All requests to this router will
+// first hit this middleware
+router.use(function (req, res, next) {
+    console.log("Middleware Called");
+    next();
+})
+ 
+// Always invoked
+router.use(function (req, res, next) {
+    res.send("Greetings from GeeksforGeeks");
+})
+ 
+app.use('/user', router);
+http://localhost:3000/user, you can see the following output on your screen:
+Server listening on PORT 3000
+Middleware Called
+And you will see the following output on your browser:
+Greetings from GeeksforGeeks
 */
