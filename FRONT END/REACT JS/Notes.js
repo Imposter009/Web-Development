@@ -177,6 +177,8 @@ A <Switch> looks through its children <Route>s and renders the first one that ma
 
 >>{{}} outer bracket js ke liye aur inner object ke liye. eg: <h1 style={{margin:'10px';}} > <h1/>
 
+>>Babel, allows us to write JSX syntax and ES6 in older browsers.
+
 =>What is a State?
 state is plain JavaScript objects. state is managed within the component (similar to variables declared within a function).
 >Like normal variables, state can hold any datatype like strings, numbers, booleans, arrays, objects, objects in arrays, arrays in objects
