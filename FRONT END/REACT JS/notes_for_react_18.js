@@ -13,5 +13,13 @@ import ReactDOM from "react-dom/client"
 }
 
 /*
+In order to take advantage of React 18's concurrent features you'll need to use the new root API for client rendering.
+// Before
+import ReactDOM from 'react-dom';
+ReactDOM.render(<App />, document.getElementById('root'));
 
+// After
+import ReactDOM from 'react-dom/client';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
 */
