@@ -87,8 +87,9 @@ export class Notes extends Component {
   //componentDidMount(){} is always called after render
   componentDidMount() { let url = "url of the API which we will be using" }
 
-  //creating a constructor,constructor will be called when the component(newsId) gets initiated.it is important to write super()
+  //creating a constructor,constructor will be called when the component(newsId)/object gets initiated.it is important to write super()
   constructor() {
+    //The super() method refers to the parent class.By calling the super() method in the constructor method, we call the parent's constructor method and get access to the parent's properties and methods.
     super();
 
     // component properties should be kept in an object called state. it is  a use state
@@ -122,7 +123,8 @@ export class Notes extends Component {
 }
 
 /*
->>in class based component we will use `this` operator with every variable or state or function. eg= this.state.title, onClick={this.funName}
+>> A class is a type of function, but instead of using the keyword function to initiate it, we use the keyword class.the properties are assigned inside a constructor() method. in class based component we will use `this` operator with every variable or state or function. eg= this.state.title, onClick={this.funName}
+
 >>in class we use this.props and we define it in class component as defaultProps and propTypes. defaultProps is use to give default value to our props and propTypes are use to tell which kind of prop wil come.
 eg <newsId author="sumit" number=8/>
 class newsID()
@@ -142,6 +144,19 @@ render (){
            console.log(${this.prop.author});
   }
 }
+
+>>Create an object called "mycar" based on the Car class::
+class Car {
+  constructor(name) {
+    this.brand = name;
+  }
+}
+const mycar = new Car("Ford");
+
+>>
+
+>>
+
 */
 
 // class  based component
@@ -163,12 +178,8 @@ A <Switch> looks through its children <Route>s and renders the first one that ma
 
 /*
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+------------------------------------------------------------------------------------------------------------------------------------------
 >>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc.
->>React.js library has two components:
-1.Class components
-2.Functional Components
 
 >>react is 1) composable:mtlb har component ko alag alag likhte hai. 2) declarative: mtlb hum sirf batate hai ki kya karna hai.
 >>react is use to make single page application. isse banaye gaye page reload nhi hote. usme bs kuch components change ho jate hai baaki as it is rehta hai mtlb baar baar repeat hone wali cheeze server se nhi aati. 
@@ -178,6 +189,36 @@ A <Switch> looks through its children <Route>s and renders the first one that ma
 >>{{}} outer bracket js ke liye aur inner object ke liye. eg: <h1 style={{margin:'10px';}} > <h1/>
 
 >>Babel, allows us to write JSX syntax and ES6 in older browsers.
+
+>>ES6 stands for ECMAScript 6. ECMAScript was created to standardize JavaScript, and ES6 is the 6th version of ECMAScript,
+
+>>jsx dont allow if statement intead of if we use ternary operator
+As JSX is a combination of HTML and JavaScript it is not supported by Browsers. So, if any file contains a JSX file, the Babel transpiler converts the JSX into JavaScript objects which becomes valid JavaScript. Thus, browsers understand the code and execute it. Browsers can’t read JSX because there is no inherent implementation for the browser engines to read and understand them.
+
+>>React.js library has two components:
+1.Class components
+2.Functional Components
+
+:>>#CLASS COMPONENT
+
+:The class component has to include the extends React.Component statement, this statement creates an inheritance to React.Component, and gives your component access to React.Component's functions.The component also requires a render() method, this method returns HTML.
+
+:If there is a constructor() function in your component, this function will be called when the component gets initiated.The constructor function is where you initiate the component's properties.In React, component properties should be kept in an object called state.The constructor function is also where you honor the inheritance of the parent component by including the super() statement, which executes the parent component's constructor function, and your component has access to all the functions of the parent component (React.Component).super(props) before anything else, this will initiate the parent's constructor method and allows the component to inherit methods from its parent (React.Component).
+
+:The state object is where you store property values that belongs to the component.When the state object changes, the component re-renders.To change a value in the state object, use the this.setState() method.
+
+:Another way of handling component properties is by using props. Props are like function arguments, and you send them into the component as attributes.If your component has a constructor function, the props should always be passed to the constructor and also to the React.Component via the super() method. 
+eg::
+class Car extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <h2>I am a {this.props.model}!</h2>;
+  }
+}
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Car model="Mustang"/>);
 
 =>What is a State?
 state is plain JavaScript objects. state is managed within the component (similar to variables declared within a function).
@@ -215,14 +256,14 @@ export default Blogs;
 >useState takes initial state as argument and gives a state and a function(setName in this case) to update that state as we can't directly change/update a state. Also, these state names are just like variables, hence you can name them anything you like.
 >it returns a state and a function to change/update that state. Hence, everything is stored in name
 
->>`HIGHER ORDER COMPONENT` 
+>>`#HIGHER ORDER COMPONENT` 
 a higher-order component is a function that takes a component and returns a new component.::
 const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
->>`PURE COMPONENT` 
+>>`#PURE COMPONENT` 
 React pure components are the components that do not re-render when the value of props and state has been updated with the same values. Since these components do not cause re-rendering when the same values are passed thus they improve performance
 
->>` REACT LIFE CYCLE`  
+>>` #REACT LIFE CYCLE`  
 each component in React has a lifecycle which you can monitor and manipulate during its three main phases.The three phases are: Mounting, Updating, and Unmounting.
 
 #:Mounting means putting elements into the DOM.
@@ -248,6 +289,17 @@ eg::class Header extends React.Component {
 }
 
 ReactDOM.render(<Header />, document.getElementById('root'));
+
+2.The getDerivedStateFromProps() method is called right before rendering the element(s) in the DOM.This is the natural place to set the state object based on the initial props.It takes state as an argument, and returns an object with changes to the state.
+eg::
+constructor(props) {
+    super(props);
+    this.state = {favoritecolor: "red"};
+  }
+static getDerivedStateFromProps(props, state) {
+    return {favoritecolor: props.favcol };
+  }
+  render(){}
 
 3.The render() method is required, and is the method that actually outputs the HTML to the DOM.
 
