@@ -309,8 +309,8 @@ This is where you run statements that requires that the component is already pla
 #:UPDATING A component is updated whenever there is a change in the component's state or props.
 React has five built-in methods that gets called, in this order, when a component is updated:
 
-1 getDerivedStateFromProps() This is the first method that is called when a component gets updated.
-2 shouldComponentUpdate() this method you can return a Boolean value(default true) that specifies whether React should continue with the rendering or not.
+1 getDerivedStateFromProps() This is the first method that is called when a component gets updated.This is still the natural place to set the state object based on the initial props.
+2 shouldComponentUpdate() this method you can return a Boolean value(default true) that specifies whether React should continue with the re-rendering or not.
 3 render()
 4 getSnapshotBeforeUpdate() In the getSnapshotBeforeUpdate() method you have access to the props and state before the update, meaning that even after the update, you can check what the values were before the update.
 If the getSnapshotBeforeUpdate() method is present, you should also include the componentDidUpdate() method, otherwise you will get an error.
@@ -395,6 +395,9 @@ class garage extend component {
   }
 
 **in class we use `this` and in function we dont use it.
+:to send a variable as prop we use curly bracket.
+eg :: 
+const obj={name: "sam", age: "21"}..<car detail={obj}/>
 
 >>`PROPS VS STATE`
 :Props are used to pass data and event handlers to its children components
