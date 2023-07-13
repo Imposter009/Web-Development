@@ -123,35 +123,7 @@ export class Notes extends Component {
 }
 
 /*
->> A class is a type of function, but instead of using the keyword function to initiate it, we use the keyword class.the properties are assigned inside a constructor() method. in class based component we will use `this` operator with every variable or state or function. eg= this.state.title, onClick={this.funName}
 
->>in class we use this.props and we define it in class component as defaultProps and propTypes. defaultProps is use to give default value to our props and propTypes are use to tell which kind of prop wil come.
-eg <newsId author="sumit" number=8/>
-class newsID()
-{
-  static defaultProps={
-    author:' unknown',
-    number: 10
-  }
-  static propTypes={
-    author: PropTypes.string,
-    number: PropType.number
-  }
-  this.state={title = "code "}
-}
-render (){
-  return {
-           console.log(${this.prop.author});
-  }
-}
-
->>Create an object called "mycar" based on the Car class::
-class Car {
-  constructor(name) {
-    this.brand = name;
-  }
-}
-const mycar = new Car("Ford");
 
 >>
 
@@ -201,7 +173,7 @@ As JSX is a combination of HTML and JavaScript it is not supported by Browsers. 
 
 :>>#CLASS COMPONENT
 
-:The class component has to include the extends React.Component statement, this statement creates an inheritance to React.Component, and gives your component access to React.Component's functions.The component also requires a render() method, this method returns HTML.
+:The class component has to include the extends React.Component statement, this statement creates an inheritance to React.Component, and gives your component access to React.Component's functions.The component also requires a render() method, this method returns HTML.in class based component we will use `this` operator with every variable or state or function. eg= this.state.title, onClick={this.funName}
 
 :If there is a constructor() function in your component, this function will be called when the component gets initiated.The constructor function is where you initiate the component's properties.In React, component properties should be kept in an object called state.The constructor function is also where you honor the inheritance of the parent component by including the super() statement, which executes the parent component's constructor function, and your component has access to all the functions of the parent component (React.Component).super(props) before anything else, this will initiate the parent's constructor method and allows the component to inherit methods from its parent (React.Component).
 
@@ -219,6 +191,34 @@ class Car extends React.Component {
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Car model="Mustang"/>);
+
+>>in class we use this.props and we define it in class component as defaultProps and propTypes. defaultProps is use to give default value to our props and propTypes are use to tell which kind of prop wil come.
+eg <newsId author="sumit" number=8/>
+class newsID()
+{
+  static defaultProps={
+    author:' unknown',
+    number: 10
+  }
+  static propTypes={
+    author: PropTypes.string,
+    number: PropType.number
+  }
+  this.state={title = "code "}
+}
+render (){
+  return {
+           console.log(${this.prop.author});
+  }
+}
+
+>>Create an object called "mycar" based on the Car class::
+class Car {
+  constructor(name) {
+    this.brand = name;
+  }
+}
+const mycar = new Car("Ford");
 
 =>What is a State?
 state is plain JavaScript objects. state is managed within the component (similar to variables declared within a function).
@@ -411,7 +411,7 @@ const obj={name: "sam", age: "21"}..<car detail={obj}/>
 :State is generally updated by event handlers
 :State is initialized in the constructor
 
->>` EVENTS `
+>>` #EVENTS `
 :React events are written in camelCase syntax:  onClick instead of onclick.
 :React event handlers are written inside curly braces:  onClick={shoot}  instead of onClick="shoot()".
 
