@@ -171,6 +171,125 @@ As JSX is a combination of HTML and JavaScript it is not supported by Browsers. 
 1.Class components
 2.Functional Components
 
+>>The .map(item,index) method allows you to run a function on each item in the array, returning a new array as the result.
+
+>>Keys allow React to keep track of elements. This way, if an item is updated or removed, only that item will be re-rendered instead of the entire list.Keys need to be unique to each sibling. But they can be duplicated globally.
+
+>>#FORMS
+:eg::
+function MyForm() {
+  return (
+    <form>
+      <label>Enter your name:
+        <input type="text" />
+      </label>
+    </form>
+  )
+}
+This will work as normal, the form will submit and the page will refresh.But this is generally not what we want to happen in React.We want to prevent this default behavior and let React control the form.
+
+:Handling forms is about how you handle the data when it changes value or gets submitted.In HTML, form data is usually handled by the DOM.In React, form data is usually handled by the components.When the data is handled by the components, all the data is stored in the component state.You can control changes by adding event handlers in the onChange attribute.We can use the useState Hook to keep track of each inputs value and provide a "single source of truth" for the entire application.
+eg::
+function MyForm() {
+  const [name, setName] = useState("");
+
+  return (
+    <form>
+      <label>Enter your name:
+        <input
+          type="text" 
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+    </form>
+  )
+}
+
+:You can control the submit action by adding an event handler in the onSubmit attribute for the <form>. 
+eg::
+function MyForm() {
+  const [name, setName] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`The name you entered was: ${name}`)
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>Enter your name:
+        <input 
+          type="text" 
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <input type="submit" />
+    </form>
+  )
+}
+a preventDefault is called on the event when submitting the form to prevent a browser reload/refresh.
+
+:You can control the values of more than one input field by adding a name attribute to each element.We will initialize our state with an empty object.To access the fields in the event handler use the event.target.name and event.target.value syntax.To update the state, use square brackets [bracket notation] around the property name.
+
+function MyForm() {
+  const [inputs, setInputs] = useState({});
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs(values => ({...values, [name]: value}))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(inputs);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>Enter your name:
+      <input 
+        type="text" 
+        name="username" 
+        value={inputs.username || ""} 
+        onChange={handleChange}
+      />
+      </label>
+      <label>Enter your age:
+        <input 
+          type="number" 
+          name="age" 
+          value={inputs.age || ""} 
+          onChange={handleChange}
+        />
+        </label>
+        <input type="submit" />
+    </form>
+  )
+}
+
+:A drop down list, or a select box, in React is also a bit different from HTML.in HTML, the selected value in the drop down list was defined with the selected attribute. In React, the selected value is defined with a value attribute on the select tag:
+function MyForm() {
+  const [myCar, setMyCar] = useState("Volvo");
+
+  const handleChange = (event) => {
+    setMyCar(event.target.value)
+  }
+
+  return (
+    <form>
+      <select value={myCar} onChange={handleChange}>
+        <option value="Ford">Ford</option>
+        <option value="Volvo">Volvo</option>
+        <option value="Fiat">Fiat</option>
+      </select>
+    </form>
+  )
+}
+
+
 :>>#CLASS COMPONENT
 
 :The class component has to include the extends React.Component statement, this statement creates an inheritance to React.Component, and gives your component access to React.Component's functions.The component also requires a render() method, this method returns HTML.in class based component we will use `this` operator with every variable or state or function. eg= this.state.title, onClick={this.funName}
@@ -255,6 +374,52 @@ export default Blogs;
 </>
 >useState takes initial state as argument and gives a state and a function(setName in this case) to update that state as we can't directly change/update a state. Also, these state names are just like variables, hence you can name them anything you like.
 >it returns a state and a function to change/update that state. Hence, everything is stored in name
+
+
+>>#ROUTER
+eg::
+<BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+
+We wrap our content first with <BrowserRouter>.Then we define our <Routes>. An application can have multiple <Routes>. Our basic example only uses one.<Route>s can be nested. The first <Route> has a path of / and renders the Layout component.The nested <Route>s inherit and add to the parent route. So the blogs path is combined with the parent and becomes /blogs.The Home component route does not have a path but has an index attribute. That specifies this route as the default route for the parent route, which is /.Setting the path to * will act as a catch-all for any undefined URLs. This is great for a 404 error page.
+
+:An <Outlet> should be used in parent route elements to render their child route elements. This allows nested UI to show up when child routes are rendered. If the parent route matched exactly, it will render a child index route or nothing if there is no index route.
+eg::
+function Dashboard() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+
+      // This element will render either <DashboardMessages> when the URL is "/messages", <DashboardTasks> at "/tasks", or null if it is "/"
+      <Outlet />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Dashboard />}>
+        <Route
+          path="messages"
+          element={<DashboardMessages />}
+        />
+        <Route path="tasks" element={<DashboardTasks />} />
+      </Route>
+    </Routes>
+  );
+}
+in our previous eg layout is our parent component
+
+
 
 >>`#HIGHER ORDER COMPONENT` 
 a higher-order component is a function that takes a component and returns a new component.::
