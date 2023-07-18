@@ -158,7 +158,7 @@ A <Switch> looks through its children <Route>s and renders the first one that ma
 
 >>ek page se dusre page pr jaane ke liye anchor(<a>) use nhi karenge uski jagha router,switch, link use karenge.
 
->>{{}} outer bracket js ke liye aur inner object ke liye. eg: <h1 style={{margin:'10px';}} > <h1/>
+>>{{}} outer bracket js ke liye aur inner object ke liye. eg: <h1 style={{margin:'10px';}} > <h1/>In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly braces, the styling in the example above is written inside two sets of curly braces {{}}.
 
 >>Babel, allows us to write JSX syntax and ES6 in older browsers.
 
@@ -288,6 +288,125 @@ function MyForm() {
     </form>
   )
 }
+
+:Notice how onClick={handleClick} has no parentheses at the end! Do not call the event handler function: you only need to pass it down. React will call your event handler when the user clicks the button.
+
+>>#HOOKS
+:Functions starting with use are called Hooks. useState is a built-in Hook provided by React.Hooks allow function components to have access to state and other React features. You can also write your own Hooks by combining the existing ones.Hooks are more restrictive than other functions. You can only call Hooks at the top of your components (or other Hooks). If you want to use useState in a condition or a loop, extract a new component and put it there. 
+
+:using one use state in more than one component and passing it::
+--app.js--
+export default function MyApp() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>Counters that update together</h1>
+      <MyButton count={count} onClick={handleClick} />
+      <MyButton count={count} onClick={handleClick} />
+    </div>
+  );
+}
+---button.js---
+
+function MyButton({ count, onClick }) {
+  return (
+    <button onClick={onClick}>
+      Clicked {count} times
+    </button>
+  );
+}
+
+:>useState
+:The React useState Hook allows us to track state  (data or properties) in a function component.The useState Hook can be used to keep track of strings, numbers, booleans, arrays, objects, and any combination of these!
+
+:we can include an object or array to our useState
+function Car() {
+  const [car, setCar] = useState({
+    brand: "Ford",
+    model: "Mustang",
+    year: "1964",
+    color: "red"
+  });
+
+:Updating Objects and Arrays in State
+function Car() {
+  const [car, setCar] = useState({
+    brand: "Ford",
+    model: "Mustang",
+    year: "1964",
+    color: "red"
+  });
+
+  const updateColor = () => {
+    setCar(previousState => {
+      return { ...previousState, color: "blue" }
+    });
+  }
+Because we need the current value of state, we pass a function into our setCar function. This function receives the previous value.We then return an object, spreading the previousState and overwriting only the color.
+
+:>useEffect
+:he useEffect Hook allows you to perform side effects in your components.Some examples of side effects are: fetching data, directly updating the DOM, and timers.useEffect accepts two arguments. The second argument is optional.::
+useEffect(<function>, <dependency>)
+
+:useEffect runs on every render. That means that when the data changes, a render happens, which then triggers another effect.This is not what we want. There are several ways to control when side effects run.We should always include the second parameter which accepts an array. We can optionally pass dependencies to useEffect in this array.
+1. No dependency passed:
+useEffect(() => {
+  //Runs on every render
+});
+
+2. An empty array:
+
+useEffect(() => {
+  //Runs only on the first render
+}, []);
+
+3. Props or state values:
+
+useEffect(() => {
+  //Runs on the first render
+  //And any time any dependency value changes
+}, [prop, state]);
+
+eg::
+function Counter() {
+  const [count, setCount] = useState(0);
+  const [calculation, setCalculation] = useState(0);
+
+  useEffect(() => {
+    setCalculation(() => count * 2);
+  }, [count]); // <- add the count variable here
+
+  return (
+    <>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount((c) => c + 1)}>+</button>
+      <p>Calculation: {calculation}</p>
+    </>
+  );
+  Here is an example of a useEffect Hook that is dependent on a variable. If the count variable updates, the effect will run again:
+
+:Some effects require cleanup to reduce memory leaks.Timeouts, subscriptions, event listeners, and other effects that are no longer needed should be disposed.We do this by including a return function at the end of the useEffect Hook
+eg::
+const [count, setCount] = useState(0);
+useEffect(() => {
+    let timer = setTimeout(() => {
+    setCount((count) => count + 1);
+  }, 1000);
+
+  return () => clearTimeout(timer)
+  }, []);
+
+
+>>#
+
+
+
+
 
 
 :>>#CLASS COMPONENT
@@ -419,7 +538,51 @@ function App() {
 }
 in our previous eg layout is our parent component
 
+>>#MEMO
+:Using memo will cause React to skip rendering a component if its props have not changed.
+eg:: export default memo(component_name);
 
+---index.js:---
+
+import { useState } from "react";
+import ReactDOM from "react-dom/client";
+import Todos from "./Todos";
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState(["todo 1", "todo 2"]);
+
+  const increment = () => {
+    setCount((c) => c + 1);
+  };
+  return (
+    <>
+      <Todos todos={todos} />
+      <hr />
+      <div>
+        Count: {count}
+        <button onClick={increment}>+</button>
+      </div>
+    </>
+  );
+};
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+---Todos.js:---
+
+import { memo } from "react";
+const Todos = ({ todos }) => {
+  console.log("child render");
+  return (
+    <>
+      <h2>My Todos</h2>
+      {todos.map((todo, index) => {
+        return <p key={index}>{todo}</p>;
+      })}
+    </>
+  );
+};
+export default memo(Todos);
 
 >>`#HIGHER ORDER COMPONENT` 
 a higher-order component is a function that takes a component and returns a new component.::
