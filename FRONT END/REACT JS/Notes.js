@@ -403,11 +403,99 @@ useEffect(() => {
 
 
 :>#useContext Hook
+:React Context is a way to manage state globally.It can be used together with the useState Hook to share state between deeply nested components more easily than with useState alone
 
+:things we use to do earlier when we were not using useContext. i.e using useState only::
+1.State should be held by the highest parent component in the stack that requires access to the state.
+2 we will need to pass the state as "props" through each nested component. This is called "prop drilling".
+eg::
+function Component1() {
+  const [user, setUser] = useState("Jesse Hall");
 
+  return (
+    <>
+      <h1>{`Hello ${user}!`}</h1>
+      <Component2 user={user} />
+    </>
+  );
+}
 
+function Component2({ user }) {
+  return (
+    <>
+      <h1>Component 2</h1>
+      <Component3 user={user} />
+    </>
+  );
+}
 
+function Component3({ user }) {
+  return (
+    <>
+      <h1>Component 3</h1>
+      <h2>{`Hello ${user} again!`}</h2>
+    </>
+  );
+}
 
+:now using useContext::
+1.create context, you must Import createContext and initialize it:
+2.we'll Wrap child components in the Context Provider and supply the state value.
+3.In order to use the Context in a child component, we need to access it using the useContext Hook.First, include the useContext in the import statement then use it
+eg::
+import { useState, createContext, useContext } from "react";
+import ReactDOM from "react-dom/client";
+
+const UserContext = createContext();
+//initializing it above the parent functions. we gave it UserContext name
+function Component1() {
+  const [user, setUser] = useState("Jesse Hall");
+
+  return (
+    <UserContext.Provider value={user}>
+      <h1>{`Hello ${user}!`}</h1>
+      <Component2 />
+    </UserContext.Provider>
+  );
+}
+
+function Component2() {
+  return (
+    <>
+      <h1>Component 2</h1>
+      <Component3 />
+    </>
+  );
+}
+
+function Component3() {
+  return (
+    <>
+      <h1>Component 3</h1>
+      <Component4 />
+    </>
+  );
+}
+
+function Component4() {
+  return (
+    <>
+      <h1>Component 4</h1>
+      <Component5 />
+    </>
+  );
+}
+
+function Component5() {
+  const user = useContext(UserContext);
+//we are using the state here thats why using useContext here
+  return (
+    <>
+      <h1>Component 5</h1>
+      <h2>{`Hello ${user} again!`}</h2>
+    </>
+  );
+}
 
 :>>#CLASS COMPONENT
 
