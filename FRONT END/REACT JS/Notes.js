@@ -35,6 +35,10 @@ export default function Notes() {
   }
   // how to call a component correctly is this: reactDom.render(<CompName />,location) not this: reactDom.render(CompName (),location)
 
+
+
+
+
   /* how to apply black theme*/
   return (
     <>
@@ -48,7 +52,7 @@ export default function Notes() {
 // function based component
 
 
-// class  based component
+// ?class  based component
 
 /*
 // news.js
@@ -124,14 +128,7 @@ export class Notes extends Component {
 
 /*
 
-
->>
-
->>
-
-*/
-
-// class  based component
+/ ?class  based component
 
 
 /*
@@ -150,7 +147,7 @@ A <Switch> looks through its children <Route>s and renders the first one that ma
 
 /*
 
-------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------
 >>ReactJS is a JavaScript library used to build User Interfaces(UI). It significantly decreases the code with it's components, states i.e. hooks, etc.
 
 >>react is 1) composable:mtlb har component ko alag alag likhte hai. 2) declarative: mtlb hum sirf batate hai ki kya karna hai.
@@ -171,7 +168,7 @@ As JSX is a combination of HTML and JavaScript it is not supported by Browsers. 
 1.Class components
 2.Functional Components
 
->>The .map(item,index) method allows you to run a function on each item in the array, returning a new array as the result.
+*>>The .map(item,index) method allows you to run a function on each item in the array, returning a new array as the result.
 
 >>Keys allow React to keep track of elements. This way, if an item is updated or removed, only that item will be re-rendered instead of the entire list.Keys need to be unique to each sibling. But they can be duplicated globally.
 
@@ -188,6 +185,10 @@ function MyForm() {
 }
 This will work as normal, the form will submit and the page will refresh.But this is generally not what we want to happen in React.We want to prevent this default behavior and let React control the form.
 
+
+
+
+?Forms
 :Handling forms is about how you handle the data when it changes value or gets submitted.In HTML, form data is usually handled by the DOM.In React, form data is usually handled by the components.When the data is handled by the components, all the data is stored in the component state.You can control changes by adding event handlers in the onChange attribute.We can use the useState Hook to keep track of each inputs value and provide a "single source of truth" for the entire application.
 eg::
 function MyForm() {
@@ -291,8 +292,35 @@ function MyForm() {
 
 :Notice how onClick={handleClick} has no parentheses at the end! Do not call the event handler function: you only need to pass it down. React will call your event handler when the user clicks the button.
 
->>#HOOKS
-:Functions starting with use are called Hooks. useState is a built-in Hook provided by React.Hooks allow function components to have access to state and other React features. You can also write your own Hooks by combining the existing ones.Hooks are more restrictive than other functions. You can only call Hooks at the top of your components (or other Hooks). If you want to use useState in a condition or a loop, extract a new component and put it there. 
+TODO >>#HOOKS
+
+?=>What is a Hook?
+Hooks let you use state and other React features without writing a class
+>useState is a Hook that lets you add React state to function components.
+> You can also write your own Hooks by combining the existing ones
+>you need to keep in mind while using hooks:
+:You must import it from react
+:Hooks can only be called in React Function Components
+:Hooks can only be called at the top level of a component (or other Hooks), meaning it can't be called from inside a block, i.e. {}. So, can't be called inside if, loops etc. If you want to use useState in a condition or a loop, extract a new component and put it there. 
+
+
+eg::
+<>
+import React,{useState} from 'react'; 
+const Blogs = () => {
+    // Can call here
+   const [name, setName] = useState('')  
+   setName('Lovish')
+    if (TRUE){
+        // Can't call here
+    }
+    return <h1>My name is {name}</h1> 
+};
+export default Blogs;
+</>
+>useState takes initial state as argument and gives a state and a function(setName in this case) to update that state as we can't directly change/update a state. Also, these state names are just like variables, hence you can name them anything you like.
+>it returns a state and a function to change/update that state. Hence, everything is stored in name
+
 
 :using one use state in more than one component and passing it::
 --app.js--
@@ -312,16 +340,14 @@ export default function MyApp() {
   );
 }
 ---button.js---
-
 function MyButton({ count, onClick }) {
   return (
     <button onClick={onClick}>
       Clicked {count} times
     </button>
-  );
-}
+  );}
 
-:>useState
+?:>useState
 :The React useState Hook allows us to track state  (data or properties) in a function component.The useState Hook can be used to keep track of strings, numbers, booleans, arrays, objects, and any combination of these!
 
 :we can include an object or array to our useState
@@ -349,24 +375,23 @@ function Car() {
   }
 Because we need the current value of state, we pass a function into our setCar function. This function receives the previous value.We then return an object, spreading the previousState and overwriting only the color.
 
-:>#useEffect Hook
+?:>#useEffect Hook
 :he useEffect Hook allows you to perform side effects in your components.Some examples of side effects are: fetching data, directly updating the DOM, and timers.useEffect accepts two arguments. The second argument is optional.::
 useEffect(<function>, <dependency>)
 
 :useEffect runs on every render. That means that when the data changes, a render happens, which then triggers another effect.This is not what we want. There are several ways to control when side effects run.We should always include the second parameter which accepts an array. We can optionally pass dependencies to useEffect in this array.
+
 1. No dependency passed:
 useEffect(() => {
   //Runs on every render
 });
 
 2. An empty array:
-
 useEffect(() => {
   //Runs only on the first render
 }, []);
 
 3. Props or state values:
-
 useEffect(() => {
   //Runs on the first render
   //And any time any dependency value changes
@@ -380,7 +405,6 @@ function Counter() {
   useEffect(() => {
     setCalculation(() => count * 2);
   }, [count]); // <- add the count variable here
-
   return (
     <>
       <p>Count: {count}</p>
@@ -397,12 +421,10 @@ useEffect(() => {
     let timer = setTimeout(() => {
     setCount((count) => count + 1);
   }, 1000);
-
   return () => clearTimeout(timer)
   }, []);
 
-
-:>#useContext Hook
+?:>#useContext Hook
 :React Context is a way to manage state globally.It can be used together with the useState Hook to share state between deeply nested components more easily than with useState alone
 
 :things we use to do earlier when we were not using useContext. i.e using useState only::
@@ -497,7 +519,100 @@ function Component5() {
   );
 }
 
-:>>#CLASS COMPONENT
+?:>useRef Hook
+:The useRef Hook allows you to persist values between renders.It can be used to store a mutable value that does not cause a re-render when updated.It can be used to access a DOM element directly.
+:useRef() only returns one item. It returns an Object called current. When we initialize useRef we set the initial value: useRef(0).
+
+
+eg::
+import { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom/client";
+
+function App() {
+  const [inputValue, setInputValue] = useState("");
+  const count = useRef(0);
+
+  useEffect(() => {
+    count.current = count.current + 1;
+  });
+
+  return (
+    <>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <h1>Render Count: {count.current}</h1>
+    </>
+  );
+}
+
+*:Accessing DOM Elements
+In general, we want to let React handle all DOM manipulation.But there are some instances where useRef can be used without causing issues.In React, we can add a ref attribute to an element to access it directly in the DOM.
+
+eg::
+import { useRef } from "react";
+import ReactDOM from "react-dom/client";
+
+function App() {
+  const inputElement = useRef();
+
+  const focusInput = () => {
+    inputElement.current.focus();
+  };
+
+  return (
+    <>
+      <input type="text" ref={inputElement} />
+      <button onClick={focusInput}>Focus Input</button>
+    </>
+  );
+}
+:The JavaScript focus() method is used to give focus to an HTML element. It sets the element as the active element in the current document. It can be applied to one HTML element at a single time in a current document. The element can either be a button or a text field or a window etc. It is supported by all browsers.Focus mtlb ki wo html element highlight ho jayega bs The focus field can be removed with the help of the blur() method in javascript.
+
+*:Tracking State Changes
+The useRef Hook can also be used to keep track of previous state values.This is because we are able to persist useRef values between renders.
+
+Eg::
+import { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom/client";
+
+function App() {
+  const [inputValue, setInputValue] = useState("");
+  const previousInputValue = useRef("");
+
+  useEffect(() => {
+    previousInputValue.current = inputValue;
+  }, [inputValue]);
+
+  return (
+    <>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <h2>Current Value: {inputValue}</h2>
+      <h2>Previous Value: {previousInputValue.current}</h2>
+    </>
+  );
+}
+
+
+?:>useReducer Hook
+:The useReducer Hook is similar to the useState Hook.It allows for custom state logic.If you find yourself keeping track of multiple pieces of state that rely on complex logic, useReducer may be useful.
+:The useReducer Hook accepts two arguments.::
+useReducer(<reducer>, <initialState>)
+:The reducer function contains your custom state logic and the initialStatecan be a simple value but generally will contain an object.The useReducer Hook returns the current stateand a dispatchmethod.
+
+
+
+?:>useCallback Hook
+The React useCallback Hook returns a memoized callback function.Think of memoization as caching a value so that it does not need to be recalculated.This allows us to isolate resource intensive functions so that they will not automatically run on every render.The useCallback Hook only runs when one of its dependencies update.
+
+
+!:>>#CLASS COMPONENT
 
 :The class component has to include the extends React.Component statement, this statement creates an inheritance to React.Component, and gives your component access to React.Component's functions.The component also requires a render() method, this method returns HTML.in class based component we will use `this` operator with every variable or state or function. eg= this.state.title, onClick={this.funName}
 
@@ -505,6 +620,7 @@ function Component5() {
 
 :The state object is where you store property values that belongs to the component.When the state object changes, the component re-renders.To change a value in the state object, use the this.setState() method.
 
+?Props
 :Another way of handling component properties is by using props. Props are like function arguments, and you send them into the component as attributes.If your component has a constructor function, the props should always be passed to the constructor and also to the React.Component via the super() method. 
 eg::
 class Car extends React.Component {
@@ -546,7 +662,7 @@ class Car {
 }
 const mycar = new Car("Ford");
 
-=>What is a State?
+?=>What is a State?
 state is plain JavaScript objects. state is managed within the component (similar to variables declared within a function).
 >Like normal variables, state can hold any datatype like strings, numbers, booleans, arrays, objects, objects in arrays, arrays in objects
 eg::
@@ -557,33 +673,7 @@ eg::
     >>here data is initial state and setData will be new state.useState wale bracket me jo likjte hai wo initial value hoti hai.
 >>useState ko hum log funtion ke start me hi likhenge aur kisi block ke andar nhi warna error dikhayega.
 
-
-=>What is a Hook?
-Hooks let you use state and other React features without writing a class
->useState is a Hook that lets you add React state to function components.
->you need to keep in mind while using hooks:
-:You must import it from react
-:Hooks can only be called in React Function Components
-:Hooks can only be called at the top level of a component, meaning it can't be called from inside a block, i.e. {}. So, can't be called inside if, loops etc.
-eg::
-<>
-import React,{useState} from 'react'; 
-const Blogs = () => {
-    // Can call here
-   const [name, setName] = useState('')  
-   setName('Lovish')
-    if (TRUE){
-        // Can't call here
-    }
-    return <h1>My name is {name}</h1> 
-};
-export default Blogs;
-</>
->useState takes initial state as argument and gives a state and a function(setName in this case) to update that state as we can't directly change/update a state. Also, these state names are just like variables, hence you can name them anything you like.
->it returns a state and a function to change/update that state. Hence, everything is stored in name
-
-
->>#ROUTER
+?>>#ROUTER
 eg::
 <BrowserRouter>
       <Routes>
@@ -626,7 +716,7 @@ function App() {
 }
 in our previous eg layout is our parent component
 
->>#MEMO
+?>>#MEMO
 :Using memo will cause React to skip rendering a component if its props have not changed.
 eg:: export default memo(component_name);
 
@@ -672,9 +762,11 @@ const Todos = ({ todos }) => {
 };
 export default memo(Todos);
 
->>`#HIGHER ORDER COMPONENT` 
+?>>`#HIGHER ORDER COMPONENT` 
 a higher-order component is a function that takes a component and returns a new component.::
 const EnhancedComponent = higherOrderComponent(WrappedComponent);
+
+
 
 >>`#PURE COMPONENT` 
 React pure components are the components that do not re-render when the value of props and state has been updated with the same values. Since these components do not cause re-rendering when the same values are passed thus they improve performance
@@ -774,7 +866,7 @@ class Child extends React.Component {
 ReactDOM.render(<Container />, document.getElementById('root'));
 
 
->>`PROPS `
+?>>`PROPS `
 Props(properties) are arguments passed into React components
 
 for function::
@@ -815,7 +907,7 @@ class garage extend component {
 eg :: 
 const obj={name: "sam", age: "21"}..<car detail={obj}/>
 
->>`PROPS VS STATE`
+TODO >>`PROPS VS STATE`
 :Props are used to pass data and event handlers to its children components
 :Props are immutable - Once set, props cannot be changed
 :Props can be used in both functional and class components
@@ -827,7 +919,7 @@ const obj={name: "sam", age: "21"}..<car detail={obj}/>
 :State is generally updated by event handlers
 :State is initialized in the constructor
 
->>` #EVENTS `
+TODO >>` #EVENTS `
 :React events are written in camelCase syntax:  onClick instead of onclick.
 :React event handlers are written inside curly braces:  onClick={shoot}  instead of onClick="shoot()".
 
@@ -856,4 +948,14 @@ function Football() {
 
 
 
+*/
+
+/*
+                                                               !Questions
+
+Ques:what is prop drilling ? 
+when we pass the state as "props" through each nested component, it is is called prop drilling.
+
+Ques: diff bw useMemo and useCallback
+The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns a memoized value and useCallback returns a memoized function.
 */
