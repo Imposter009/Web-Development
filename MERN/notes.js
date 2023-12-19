@@ -4,7 +4,7 @@
 
 >>A package in Node.js contains all the files you need for a module. Modules are JavaScript libraries you can include in your project.
 
-                             #NEXT JS
+!NEXT JS
 
 > to create a Next Js app::
 npx create-next-app
@@ -20,7 +20,7 @@ npx create-next-app
 -----------------------------------------------------------------------------------------------------------------------------
 
 
-                             #NODE JS 
+!NODE JS 
 
 :Node.js is an open-source, cross-platform JavaScript runtime environment and library for running web applications outside the client’s browse.Node.js allows you to run JavaScript on the server.
 :It is used for creating server-side web applications
@@ -240,7 +240,7 @@ DNS module is also used for performing name resolution without a network communi
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
-                                                    #EXPRESS
+  !EXPRESS
 
 >>Express is a flexible Node.js web application framework that provides a wide set of features to develop both web and mobile applications. It's a layer built on the top of the Node.js that helps manage a server and routes. Express.js makes it much easier and simpler to build a web server with the use of middleware(A request handler with access to the application's request-response cycle is known as middleware), which can handle requests and responses
 
