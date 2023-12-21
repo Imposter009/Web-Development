@@ -44,7 +44,84 @@ Response object comprises of many properties, but important ones are :
 :Response status code (200, 404, 403, 502)
 :Response body : Actual data to be sent to client : HTML, JS, JSON, CSS, Image etc.
 
+*req and res are written in HTTP format. we send res data in string format only so it is importnat to convert our json data into string before sending it. but we can display this string data in html or json type accordingly by giving "Content-type:application/json" so that when it is displayed on the browser it is shown as json
 
+>We can use Server to do 3 things:
+1:Static file Hosting : Sending normal files without formatting or modifying.
+eg:: jb hum HTML file bhej rahe ho server se
+2:Server Side Rendering : Mixing data with templates and rendering dynamic views (dynamic web pages)
+eg:: jb hum html file bhej rahe ho pr jo data show ho raha hai usme wo hum kisi aur json file se la rahe hai dynamically
+3:Web APIs : Sending data via some APIs/ endpoints.
+eg:: har end point ke liye alag data send karna
+
+*Every Request has one and only one response. If there is more than 1 response which you want to send - you will encounter a error - "Headers already sent"
+*POSTMAN is a software for doing complex API requests
+
+>eg::
+{
+   const http = require('http');
+   const fs = require('fs');
+
+ const index = fs.readFileSync('index.html', 'utf-8');
+ const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+ const products = data.products;
+
+{
+    //dynamic rendering/server side rendering: using data from our json file(product) in the HTML file (index)
+const server = http.createServer((req, res) => {
+  console.log(req.url, req.method);
+
+  if(req.url.startsWith('/product')){
+    const id = req.url.split('/')[2]
+    //req.url.split('/') will return an array=["","product","id:1"] /product/1
+    const product = products.find(p=>p.id===(+id))
+    console.log(product)
+    res.setHeader('Content-Type', 'text/html');
+          let modifiedIndex = index.replace('**title**', product.title)
+          .replace('**url**', product.thumbnail)
+          .replace('**price**', product.price)
+          .replace('**rating**', product.rating)
+          res.end(modifiedIndex);
+          return;
+  }
+// for general /product:
+
+  '/product':
+      res.setHeader('Content-Type', 'text/html');
+      let modifiedIndex = index.replace('**title**', product.title)
+      .replace('**url**', product.thumbnail)
+      .replace('**price**', product.price)
+      .replace('**rating**', product.rating)
+      res.end(modifiedIndex);
+      break;
+}
+
+{
+    //web API: differnet data for different endpoints 
+  switch (req.url) {
+    case '/':
+      res.setHeader('Content-Type', 'text/html');
+      res.end(index);
+      break;
+    case '/api':
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(data));
+      break;
+
+    default:
+      res.writeHead(404);
+      res.end();
+  }
+
+  console.log('server started  ');
+  //   res.setHeader('Dummy', 'DummyValue');
+
+  //
+}
+});
+server.listen(8080);
+ 
+}
 
 
 */
