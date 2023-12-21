@@ -30,7 +30,19 @@ to install a package as devdependency we write as "npm i nodemon --save-dev"
 >nodemon is a package for running node server and track live changes without re-starting the server again.
 >scripts inside package.json can be used like npm run <script-name> e.g npm run dev. Only for npm start you can avoid run.
 
+>HTTP requests
+Request object comprises of many properties, but important ones are :
+:Type of Request : GET, POST, PUT, DELETE etc.
+:Headers : Meta data sent by your browser like browser name, cookies, authentication information etc.
+:Query Parameters (url?name=john) : This is used in GET requests to send data to server
+:Route Params (url/john)
+:Body data : This is used in POST and other requests to send data to server
 
+>HTTP responses
+Response object comprises of many properties, but important ones are :
+:Headers : Meta data sent by your server back to client like server name, content size, last updated time etc.
+:Response status code (200, 404, 403, 502)
+:Response body : Actual data to be sent to client : HTML, JS, JSON, CSS, Image etc.
 
 
 
