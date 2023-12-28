@@ -125,18 +125,69 @@ server.listen(8080, () => {
 
 >REST API ( CRUD - Create , Read , Update, Delete) :
 +CREATE
-POST /products - create a new resource (product)
+POST /products - create a new resource (in product) . to create a new task object (data will go inside request body)
 
 +READ
-GET /products - read many resources (products)
-GET /products/:id - read one specific resource (product)
+GET /products - read many resources (from products).  to read all
+GET /products/:id - read one specific resource (from product).  to read a particular task which can be identified by unique id
 
 +UPDATE
-PUT /products/:id - update by replacing all content of specific resource (product).
-PATCH /products/:id - update by only setting content from body of request and not replacing other parts of specific resource (product).
+PUT /products/:id - update by replacing all content of specific resource (in product). to update a particular task which can be identified by unique id. Data to be updated will be sent in the request body. Document data will be generally totally replaced.
+PATCH /products/:id - update by only setting content from body of request and not replacing other parts of specific resource (in product).to update a particular task which can be identified by unique id. Data to be updated will be sent in the request body. Only few fields will be replace which are sent in request body
 
 +DELETE
-DELETE /products/:id - delete a specific resource (product).
+DELETE /products/:id - delete a specific resource (in product). to delete a particular task which can be identified by unique id.
+
+{
+    // API - Endpoint - Route
+// Products
+// API ROOT , base URL, example - google.com/api/v2/
+
+// C R U D
+//Create POST /products    
+server.post('/products', (req, res) => {
+  console.log(req.body);
+  products.push(req.body);
+  res.status(201).json(req.body);
+});
+
+// Read GET /products
+server.get('/products', (req, res) => {
+  res.json(products);
+});
+
+// Read GET /products/:id
+server.get('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const product = products.find(p=>p.id===id)
+  res.json(product);
+});
+
+// Update PUT /products/:id
+server.put('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex(p=>p.id===id)
+  products.splice(productIndex,1,{...req.body, id:id})
+  res.status(201).json();
+});
+// Update PATCH /products/:id
+server.patch('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex(p=>p.id===id)
+  const product = products[productIndex];
+  products.splice(productIndex,1,{...product,...req.body})
+  res.status(201).json();
+});
+// Delete DELETE /products/:id
+server.delete('/products/:id', (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex(p=>p.id===id)
+  const product = products[productIndex];
+  products.splice(productIndex,1)
+  res.status(201).json(product);
+}); 
+}
+
 
 
 */
