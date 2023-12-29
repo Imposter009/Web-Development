@@ -188,6 +188,45 @@ server.delete('/products/:id', (req, res) => {
 }); 
 }
 
+!MVC
+>MVC (Model-View-Controller) is a pattern in software design commonly used to implement user interfaces (VIEW), data (MODEL), and controlling logic (CONTROLLER). It emphasizes a separation between the software's business logic and display.
+:Model - Database Schema's and Business logics and rules View - Server Side Templates (or React front-end) Controller - functions attached to routes for modifying request and sending responses. It's a link between the Model and View.
+
+>Router
+:These are like mini-application on which you can make set of Routes independently.(eg: /proucts and /users)
+:Routers can be attached to main Server App using server.use(router)
+:routers can only be used with middleware
+{
+  // to create a router
+  {
+    const express = require('express');
+    const router = express.Router();
+  }
+// making route endpoint and exporting
+{
+  router
+  .post('/', productController.createProduct)
+  .get('/', productController.getAllProducts)
+  .get('/:id', productController.getProduct)
+  .put('/:id', productController.replaceProduct)
+  .patch('/:id', productController.updateProduct)
+  .delete('/:id', productController.deleteProduct);
+
+   exports.router = router;
+// here we have imported the productController which is a controller file in which we have defined all the steps for get,post,delete methods for /product
+}
+
+// importing and using route in the index.js file
+{
+  // we will import the route and then use it
+  const productRouter = require('./routes/product')
+  const userRouter = require('./routes/user')
+  // we can use route through a middleware only
+  server.use('/products',productRouter.router);
+  server.use('/users',userRouter.router);
+}
+}
 
 
+>
 */
