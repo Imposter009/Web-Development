@@ -35,17 +35,29 @@ locations:[ObjectId("asdasdf"),ObjectId("grwgeq"),]
 }
 
 >MongoDB Atlas is a developer data platform that stores your data in Atlas clusters, a global, multi-cloud database service. 
->Mongo Compass : UI Client to see mongo server (local or remote)
->Mongo Shell : Command-line based mongo client for checking mongo database.
+>Mongo Compass : UI Client to see mongo server (local or remote).MongoDB Compass is a powerful GUI for querying, aggregating, and analyzing your MongoDB data in a visual environment. it allows us to query data,compose aggregation pipeline and analyse data.
+>Mongo Shell : Command-line based mongo client for checking mongo database.Mongodb shell uses node repell enviroment
+>A database cluster is a collection of databases that is managed by a single instance of a running database server
+*MongoDB Atlas and MongoDB Compass are two tools provided by MongoDB. MongoDB Atlas is a cloud-based, managed database service. It simplifies database hosting and maintenance. MongoDB Compass is a graphical tool for managing MongoDB databases, enabling easy data exploration and querying.
 
 >The MongoDB database is a core element of MongoDB Atlas.The MongoDB database is the foundation of MongoDB Atlas. The additional functionality that Atlas offers—such as full-text search, data visualization, data lake storage, and mobile device sync—are built on top of data stored in cloud-hosted MongoDB database deployments.
 
 >Schema design pattern are guidelines that help developers plan, organise and model data.
 
+>MONGODB CONNECTION STRINGS:"mongodb+srv://myDatabaseUser:D1fficultP%40ssw0rd@cluster0.example.mongodb.net/?retryWrites=true&w=majority"egample:: "mongodb+srv://MDBUser:university01@@mdb-training-cluster.swnn5.mongodb.net?retryWrites=true&w=majority"
+:mongodb+srv://
+is the required prefix that identifies this as a standard connection string
+:MDBUser:university01@
+are the credentials that the client attempts to authenticate with. If no credientials are given, MongoDB will attempt to authenticate with the admin user
+:@mdb-training-cluster.swnn5.mongodb.net
+is where our database instance is running. You can specify a host name, IP address, or UNIX domain socket. MongoDB's default port number is 27017
+:?retryWrites=true&w=majority 
+is where we can specify connection options. Each option is separated by a ?, followed by the <name>=<value> pair option. Options are optional, thus the name.
 
-
-
-
+> you can connect to Atlas by using:
+:The MongoDB Shell
+:MongoDB Compass
+:Applications
 
 >commands::
 :show dbs:-This will list all the database in your system
@@ -61,9 +73,20 @@ db.< collectionName >.find( filterObject ) - to read all docs
 db.< collectionName >.findOne( filterObject ) - to read one document
 db.< collectionName >.countDocuments( filterObject ) - shows total number of documents.
 
-:filter Object : { fieldName : {operator: value}} fieldName : database fields name operator : $eq = equal , $gt= greater than, $lt : less than, $gte = greater than equal, $and and $or operator value : what value we are comparing with operator.
+:filter Object : { fieldName : {operator: value}} fieldName : database fields name, operator : $eq = equal , $gt= greater than, $lt = less than, $gte = greater than equal,$in:[value1, value2] = will give all the data that matches with any of the values  $and and $or operator, value : what value we are comparing with operator.
 e.g { age : {$gt:5}}. - age is greater than value 5
-
+e.g { city : {$in:[lko,delhi]}}.- will give all the documents in which city matches with either lko or delhi 
+When given equality with an _id field, the find() command will return the specified document that matches the _id. Here's an example:
+db.zips.find({ _id: ObjectId("5c8eccc1caa187d17ca6ed16") })
+Use the $elemMatch operator to find all documents that contain the specified subdocument.use to find a subdocument that matches specific criteria in an array. eg
+  { items: { $elemMatch: { name: "laptop", price: { $gt: 800 }, quantity: { $gte: 1 } }})
+logical and/or:
+db.routes.find({
+  $and: [
+    { $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }] },
+    { $or: [{ "airline.name": "American Airlines" }, { airplane: 320 }] },
+  ]
+})
 :Cursor functions : These are applied to find() query::
 sort( {fieldName: 1}) : 1 for ascending -1 for descending
 limit( x ) : only gives x documents
@@ -82,5 +105,7 @@ db.< collectionName >.deleteOne( filterObject )
 :Only return selected fields while returning result documents.
 :db.< collectionName >.find( filterObject, projectionObject ) e.g. {name:1, age:1, id:0} - only show name and age and don't show id
 
-
+{
+  >You need only one `MongoClient` instance per Atlas cluster for your application. Having more than one `MongoClient` instance for a single Atlas cluster in your application will increase costs and negatively impact the performance of your database.
+}
 */
