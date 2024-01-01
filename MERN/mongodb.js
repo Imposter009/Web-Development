@@ -78,9 +78,9 @@ e.g { age : {$gt:5}}. - age is greater than value 5
 e.g { city : {$in:[lko,delhi]}}.- will give all the documents in which city matches with either lko or delhi 
 When given equality with an _id field, the find() command will return the specified document that matches the _id. Here's an example:
 db.zips.find({ _id: ObjectId("5c8eccc1caa187d17ca6ed16") })
-Use the $elemMatch operator to find all documents that contain the specified subdocument.use to find a subdocument that matches specific criteria in an array. eg
+:Use the $elemMatch operator to find all documents that contain the specified subdocument.use to find a subdocument that matches specific criteria in an array. eg
   { items: { $elemMatch: { name: "laptop", price: { $gt: 800 }, quantity: { $gte: 1 } }})
-logical and/or:
+:logical and/or:
 db.routes.find({
   $and: [
     { $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }] },
