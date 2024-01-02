@@ -73,30 +73,38 @@ db.< collectionName >.find( filterObject ) - to read all docs
 db.< collectionName >.findOne( filterObject ) - to read one document
 db.< collectionName >.countDocuments( filterObject ) - shows total number of documents.
 
-:filter Object : { fieldName : {operator: value}} fieldName : database fields name, operator : $eq = equal , $gt= greater than, $lt = less than, $gte = greater than equal,$in:[value1, value2] = will give all the data that matches with any of the values  $and and $or operator, value : what value we are comparing with operator.
-e.g { age : {$gt:5}}. - age is greater than value 5
-e.g { city : {$in:[lko,delhi]}}.- will give all the documents in which city matches with either lko or delhi 
-When given equality with an _id field, the find() command will return the specified document that matches the _id. Here's an example:
-db.zips.find({ _id: ObjectId("5c8eccc1caa187d17ca6ed16") })
-:Use the $elemMatch operator to find all documents that contain the specified subdocument.use to find a subdocument that matches specific criteria in an array. eg
-  { items: { $elemMatch: { name: "laptop", price: { $gt: 800 }, quantity: { $gte: 1 } }})
-:logical and/or:
-db.routes.find({
-  $and: [
-    { $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }] },
-    { $or: [{ "airline.name": "American Airlines" }, { airplane: 320 }] },
-  ]
-})
-:Cursor functions : These are applied to find() query::
-sort( {fieldName: 1}) : 1 for ascending -1 for descending
-limit( x ) : only gives x documents
+ :filter Object : { fieldName : {operator: value}}; fieldName : database fields name, operator : $eq = equal , $gt= greater than, $lt = less than, $gte = greater than equal,$in:[value1, value2] = will give all the data that matches with any of the values  $and and $or operator, value : what value we are comparing with operator.
+ e.g { age : {$gt:5}}. - age is greater than value 5
+ e.g { city : {$in:[lko,delhi]}}.- will give all the documents in which city matches with either lko or delhi 
+ :When given equality with an _id field, the find() command will return the specified document that matches the _id. Here's an example:
+ db.zips.find({ _id: ObjectId("5c8eccc1caa187d17ca6ed16") })
+ :Use the $elemMatch operator to find all documents that contain the specified subdocument.use to find a subdocument that matches specific criteria in an array. eg
+   { items: { $elemMatch: { name: "laptop", price: { $gt: 800 }, quantity: { $gte: 1 } }})
+ :logical and/or:
+ db.routes.find({
+   $and: [
+     { $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }] },
+     { $or: [{ "airline.name": "American Airlines" }, { airplane: 320 }] },
+   ]
+ })
+ :Cursor functions : These are applied to find() query::
+ sort( {fieldName: 1}) : 1 for ascending -1 for descending
+ limit( x ) : only gives x documents
 
 +UPDATE COMMANDS
 db.< collectionName >.updateOne( filterObject, updateObject, options )
 db.< collectionName >.replaceOne( filterObject, updateObject ) Overwrites other fields also which are not in updateObject.
   update Objects = { $set : {field: value}}
   options : {upsert: true}
-  Upsert : Update + Insert, when we want a new info to create a new obejcts if no existing object matches filter queries.
+  The $set operator replaces the value of a field with the specified value. 
+  Upsert : Update + Insert, The upsert option creates a new document if no documents match the filtered criteria
+  The $push operator adds a new value to the already existing array field in the document .
+  the $each modifier to add multiple elements to the array.eg::
+   $push: {
+      diet: { $each: ["newts", "opossum", "skunks", "squirrels"] },
+    }
+
+
 
 +DELETE COMMANDS
 db.< collectionName >.deleteOne( filterObject )
