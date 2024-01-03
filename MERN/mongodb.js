@@ -69,9 +69,9 @@ db.< collectionName >.insertOne( newDocument )
 db.< collectionName >.insertMany( documentArray )
 
 +READ COMMANDS
-db.< collectionName >.find( filterObject ) - to read all docs
-db.< collectionName >.findOne( filterObject ) - to read one document
-db.< collectionName >.countDocuments( filterObject ) - shows total number of documents.
+db.< collectionName >.find( filterObject , projection) - to read all docs
+db.< collectionName >.findOne( filterObject, projection ) - to read one document
+db.< collectionName >.countDocuments( filterObject  ) - shows total number of documents.
 
  :filter Object : { fieldName : {operator: value}}; fieldName : database fields name, operator : $eq = equal , $gt= greater than, $lt = less than, $gte = greater than equal,$in:[value1, value2] = will give all the data that matches with any of the values  $and and $or operator, value : what value we are comparing with operator.
  e.g { age : {$gt:5}}. - age is greater than value 5
@@ -87,33 +87,91 @@ db.< collectionName >.countDocuments( filterObject ) - shows total number of doc
      { $or: [{ "airline.name": "American Airlines" }, { airplane: 320 }] },
    ]
  })
- :Cursor functions : These are applied to find() query::
- sort( {fieldName: 1}) : 1 for ascending -1 for descending
- limit( x ) : only gives x documents
+ >Cursor functions : These are applied to find() query::
+ :cursor.sort({fieldName: 1}) to return query results in a specified order. Use 1 for ascending order, and -1 for descending order.
+ :cursor.limit() to return query results in a specified order. 
+
+ >Projection::
+ :Only return selected fields while returning result documents.
+ :db.< collectionName >.find( filterObject, projectionObject ) e.g. {name:1, age:1, id:0} - only show name and age and don't show id. We can either include or exclude fields in the results, but not both. However, the _id field is the exception to this rule
+
+ >db.collection.countDocuments() to count the number of documents that match a query. countDocuments() takes two parameters: a query document and an options document.
 
 +UPDATE COMMANDS
 db.< collectionName >.updateOne( filterObject, updateObject, options )
 db.< collectionName >.replaceOne( filterObject, updateObject ) Overwrites other fields also which are not in updateObject.
-  update Objects = { $set : {field: value}}
-  options : {upsert: true}
-  The $set operator replaces the value of a field with the specified value. 
-  Upsert : Update + Insert, The upsert option creates a new document if no documents match the filtered criteria
-  The $push operator adds a new value to the already existing array field in the document .
-  the $each modifier to add multiple elements to the array.eg::
+   update Objects = { $set : {field: value}}
+   options : {upsert: true}
+  :The $set operator replaces the value of a field with the specified value. 
+  :Upsert : Update + Insert, The upsert option creates a new document if no documents match the filtered criteria
+  :The $push operator adds a new value to the already existing array field in the document .
+  :the $each modifier to add multiple elements to the array.eg::
    $push: {
       diet: { $each: ["newts", "opossum", "skunks", "squirrels"] },
     }
-
+   :The findAndModify() method is used to find and replace a single document in MongoDB. It accepts a filter document, a replacement      document, and an optional options object.  findAndModify= updateOne + findOne. eg::
+     db.podcasts.findAndModify({
+      query: { _id: ObjectId("6261a92dfee1ff300dc80bf1") },
+      update: { $inc: { subscribers: 1 } },
+      new: true,
+      })
 
 
 +DELETE COMMANDS
-db.< collectionName >.deleteOne( filterObject )
-
->Projection::
-:Only return selected fields while returning result documents.
-:db.< collectionName >.find( filterObject, projectionObject ) e.g. {name:1, age:1, id:0} - only show name and age and don't show id
-
+db.< collectionName >.deleteMany( filterObject , optons)
+db.< collectionName >.deleteOne( filterObject, options )
+   
+:
 {
   >You need only one `MongoClient` instance per Atlas cluster for your application. Having more than one `MongoClient` instance for a single Atlas cluster in your application will increase costs and negatively impact the performance of your database.
+  >BSON-encoded documents are converted automatically by the driver. This means that you can use the data immediately in your application as normal JSON and access properties by using dot notation. The driver handles the conversion from BSON to JSON for you.
+  {
+    // inserting data in db using node driver
+    const dbname = "bank"
+    const collection_name = "accounts"
+ 
+    const accountsCollection = client.db(dbname).collection(collection_name)
+
+    const sampleAccounts = [
+   {
+    account_id: "MDB011235813",
+    account_holder: "Ada Lovelace",
+    account_type: "checking",
+    balance: 60218,
+   },
+   {
+    account_id: "MDB829000001",
+    account_holder: "Muhammad ibn Musa al-Khwarizmi",
+    account_type: "savings",
+    balance: 267914296,
+   },
+   ]
+  
+   const main = async () => {
+   try {
+    await connectToDatabase()
+   let result = await accountsCollection.insertMany(sampleAccounts)
+   console.log(`Inserted ${result.insertedCount} documents`)
+   console.log(result)
+   } catch (err) {
+   console.error(`Error inserting documents: ${err}`)
+   } finally {
+    await client.close()
+   }
+ }
+ main()
+  }
+
+>
+{
+  // querying in db usint node driver
+  
 }
+
+}
+
+
+
+
+
 */
