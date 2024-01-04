@@ -125,6 +125,8 @@ db.< collectionName >.deleteOne( filterObject, options )
 {
   >You need only one `MongoClient` instance per Atlas cluster for your application. Having more than one `MongoClient` instance for a single Atlas cluster in your application will increase costs and negatively impact the performance of your database.
   >BSON-encoded documents are converted automatically by the driver. This means that you can use the data immediately in your application as normal JSON and access properties by using dot notation. The driver handles the conversion from BSON to JSON for you.
+  
+  >NodeJs Drive::
   {
     // inserting data in db using node driver
     const dbname = "bank"
@@ -162,16 +164,213 @@ db.< collectionName >.deleteOne( filterObject, options )
  main()
   }
 
->
+
+ {
+    // querying in db usint node driver
+    const documentsToFind = { balance: { $gt: 4700 } }
+    const documentToFindID = { _id: ObjectId("62a3638521a9ad028fdf77a3") }
+    const main = async () => {
+   try {
+     await connectToDatabase()
+     // find() method is used here to find all the documents that match the filter
+     let result = accountsCollection.find(documentsToFind)
+     let docCount = accountsCollection.countDocuments(documentsToFind)
+     await result.forEach((doc) => console.log(doc))
+     console.log(`Found ${await docCount} documents`)
+     
+     // find() method is used here to find one single document that match the filter i.e the objectID
+     let result = await accountsCollection.findOne(documentToFindID)
+     console.log(`Found one document`)
+     console.log(result)
+   } catch (err) {
+     console.error(`Error finding documents: ${err}`)
+   } finally {
+     await client.close()
+   }
+  }
+ 
+  >Transaction:: 
+ {
+  Step1: Create variables used in the transaction.
+// Collections
+const accounts = client.db("bank").collection("accounts")
+const transfers = client.db("bank").collection("transfers")
+
+// Account information
+let account_id_sender = "MDB574189300"
+let account_id_receiver = "MDB343652528"
+let transaction_amount = 100
+
+Step2: Start a new session.
+const session = client.startSession()
+
+Step3: Begin a transaction with the WithTransaction() method on the session.
+const transactionResults = await session.withTransaction(async () => {
+  // Operations will go here
+})
+
+Step4: Update the balance field of the sender’s account by decrementing the transaction_amount from the balance field.
+const senderUpdate = await accounts.updateOne(
+  { account_id: account_id_sender },
+  { $inc: { balance: -transaction_amount } },
+  { session }
+)
+
+Step5: Update the balance field of the receiver’s account by incrementing the transaction_amount to the balance field.
+const receiverUpdate = await accounts.updateOne(
+  { account_id: account_id_receiver },
+  { $inc: { balance: transaction_amount } },
+  { session }
+)
+
+Step6: Create a transfer document and insert it into the transfers collection.
+const transfer = {
+  transfer_id: "TR21872187",
+  amount: 100,
+  from_account: account_id_sender,
+  to_account: account_id_receiver,
+}
+
+const insertTransferResults = await transfers.insertOne(transfer, { session })
+
+Step7:Update the transfers_complete array of the sender’s account by adding the transfer_id to the array.
+const updateSenderTransferResults = await accounts.updateOne(
+  { account_id: account_id_sender },
+  { $push: { transfers_complete: transfer.transfer_id } },
+  { session }
+)
+
+Step8: Update the transfers_complete array of the receiver’s account by adding the transfer_id to the array.
+const updateReceiverTransferResults = await accounts.updateOne(
+  { account_id: account_id_receiver },
+  { $push: { transfers_complete: transfer.transfer_id } },
+  { session }
+)
+
+Step9: Log a message regarding the success or failure of the transaction.
+if (transactionResults) {
+  console.log("Transaction completed successfully.")
+} else {
+  console.log("Transaction failed.")
+}
+
+Step10: Catch any errors and close the session.
+} catch (err) {
+  console.error(`Transaction aborted: ${err}`)
+  process.exit(1)
+} finally {
+  await session.endSession()
+  await client.close()
+}
+ } 
+
+{const main = async () => {
+  try {
+    const transactionResults = await session.withTransaction(async () => {
+      // Step 1: Update the account sender balance
+      const updateSenderResults = await accounts.updateOne(
+        { account_id: account_id_sender },
+        { $inc: { balance: -transaction_amount } },
+        { session }
+      );
+      console.log(
+        `${updateSenderResults.matchedCount} document(s) matched the filter, updated ${updateSenderResults.modifiedCount} document(s) for the sender account.`
+      );
+
+      // Step 2: Update the account receiver balance
+      const updateReceiverResults = await accounts.updateOne(
+        { account_id: account_id_receiver },
+        { $inc: { balance: transaction_amount } },
+        { session }
+      );
+      console.log(
+        `${updateReceiverResults.matchedCount} document(s) matched the filter, updated ${updateReceiverResults.modifiedCount} document(s) for the receiver account.`
+      );
+
+      // Step 3: Insert the transfer document
+      const transfer = {
+        transfer_id: "TR21872187",
+        amount: 100,
+        from_account: account_id_sender,
+        to_account: account_id_receiver,
+      };
+
+      const insertTransferResults = await transfers.insertOne(transfer, {
+        session,
+      });
+      console.log(
+        `Successfully inserted ${insertTransferResults.insertedId} into the transfers collection`
+      );
+
+      // Step 4: Update the transfers_complete field for the sender account
+      const updateSenderTransferResults = await accounts.updateOne(
+        { account_id: account_id_sender },
+        { $push: { transfers_complete: transfer.transfer_id } },
+        { session }
+      );
+      console.log(
+        `${updateSenderTransferResults.matchedCount} document(s) matched in the transfers collection, updated ${updateSenderTransferResults.modifiedCount} document(s) for the sender account.`
+      );
+      // Step 5: Update the transfers_complete field for the receiver account
+      const updateReceiverTransferResults = await accounts.updateOne(
+        { account_id: account_id_receiver },
+        { $push: { transfers_complete: transfer.transfer_id } },
+        { session }
+      );
+      console.log(
+        `${updateReceiverTransferResults.matchedCount} document(s) matched in the transfers collection, updated ${updateReceiverTransferResults.modifiedCount} document(s) for the receiver account.`
+      );
+    });
+
+    console.log("Committing transaction ...");
+    // If the callback for withTransaction returns successfully without throwing an error, the transaction will be committed
+    if (transactionResults) {
+      console.log("The transaction was successfully created.");
+    } else {
+      console.log("The transaction was intentionally aborted.");
+    }
+  } catch (err) {
+    console.error(`Transaction aborted: ${err}`);
+    process.exit(1);
+  } finally {
+    await session.endSession();
+    await client.close();
+  }
+};}
+
+}
+
+
 {
-  // querying in db usint node driver
-  
-}
+>Aggregation: Collection and summary of data.
+>Stage: One of the built-in methods that can be completed on the data, but does not permanently alter it.
+ :$match:filter for data that matches criteris
+ :$sort:puts the document in certain order
+ :$group:group document based on certain criteria.eg
+ {
+  $group:
+    {
+      _id: <expression>, // Group key
+      <field>: { <accumulator> : <expression> }
+    }
+ }
+>Aggregation pipeline: A series of stages completed on the data in order
+eg::
+db.collection.aggregate([
+    {
+        $stage1: {
+            { expression1 },
+            { expression2 }...
+        },
+        $stage2: {
+            { expression1 }...
+        }
+    }
+])
+:in mongodb we can filter,sort ,grouped and transformed. output of one stage is input for other stage.
+
 
 }
-
-
-
 
 
 */
