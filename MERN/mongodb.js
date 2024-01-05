@@ -63,7 +63,7 @@ is where we can specify connection options. Each option is separated by a ?, fol
 :show dbs:-This will list all the database in your system
 :use <dbname>:-This will command will let you switch to a particular
 
->Database CRUD commands::
+?>Database CRUD commands::
 +CREATE COMMANDS
 db.< collectionName >.insertOne( newDocument )
 db.< collectionName >.insertMany( documentArray )
@@ -126,7 +126,7 @@ db.< collectionName >.deleteOne( filterObject, options )
   >You need only one `MongoClient` instance per Atlas cluster for your application. Having more than one `MongoClient` instance for a single Atlas cluster in your application will increase costs and negatively impact the performance of your database.
   >BSON-encoded documents are converted automatically by the driver. This means that you can use the data immediately in your application as normal JSON and access properties by using dot notation. The driver handles the conversion from BSON to JSON for you.
   
-  >NodeJs Drive::
+  ?>NodeJs Drive::
   {
     // inserting data in db using node driver
     const dbname = "bank"
@@ -189,7 +189,7 @@ db.< collectionName >.deleteOne( filterObject, options )
    }
   }
  
-  >Transaction:: 
+  ?>Transaction:: 
  {
   Step1: Create variables used in the transaction.
 // Collections
@@ -342,11 +342,12 @@ Step10: Catch any errors and close the session.
 
 
 {
->Aggregation: Collection and summary of data.
->Stage: One of the built-in methods that can be completed on the data, but does not permanently alter it.
+?>Aggregation
+: Collection and summary of data.Aggregation operations process data records and return computed results. When working with data in MongoDB, you may have to quickly run complex operations that involve multiple stages to gather metrics for your project. Generating reports and displaying useful metadata are just two major use cases where MongoDB aggregation operations can be incredibly useful, powerful, and flexible.
+:>Stage: One of the built-in methods that can be completed on the data, but does not permanently alter it.
  :$match:filter for data that matches criteris
  :$sort:puts the document in certain order
- :$group:group document based on certain criteria.eg
+ :$group:group document based on certain criteria.returns one document for every unique group key.eg
  {
   $group:
     {
@@ -354,7 +355,7 @@ Step10: Catch any errors and close the session.
       <field>: { <accumulator> : <expression> }
     }
  }
->Aggregation pipeline: A series of stages completed on the data in order
+:>Aggregation pipeline: A series of stages completed on the data in order
 eg::
 db.collection.aggregate([
     {
@@ -368,9 +369,47 @@ db.collection.aggregate([
     }
 ])
 :in mongodb we can filter,sort ,grouped and transformed. output of one stage is input for other stage.
+}
+
+{
+  const { MongoClient } = require("mongodb")
+  const client = new MongoClient(uri)
+  const client = new MongoClient(uri)
+const dbname = "bank";
+const collection_name = "accounts";
+const accountsCollection = client.db(dbname).collection(collection_name);.const pipeline = [
+  // Stage 1: match the accounts with a balance less than $1,000
+  { $match: { balance: { $lt: 1000 } } },
+  // Stage 2: Calculate average balance and total balance
+  {
+    $group: {
+      _id: "$account_type",
+      total_balance: { $sum: "$balance" },
+      avg_balance: { $avg: "$balance" },
+    },
+  },
+]
+const main = async () => {
+  try {
+    await client.connect()
+    console.log(`Connected to the database 🌍. \nFull connection string: ${safeURI}`)
+    let result = await accountsCollection.aggregate(pipeline)
+    for await (const doc of result) {
+      console.log(doc)
+    }
+  } catch (err) {
+    console.error(`Error connecting to the database: ${err}`)
+  } finally {
+    await client.close()
+  }
+}
+
+?indexes
+:
+
+
+
 
 
 }
-
-
 */
