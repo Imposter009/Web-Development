@@ -405,11 +405,69 @@ const main = async () => {
 }
 
 ?indexes
-:
+:they are special data structure that store small portion of data in an ordered form that are easy to traverse and search efficiently. they point to the document identity and allow you to look up access and update data faster. they are use to imporve query performance, reduce disk O/I, reduce resoure requirement, they support equality matches and range- based query operations and return sorted results.
+:types of indexes::
++Single field: they are on one field only
++Compund field: they references to multiple fields within a collection's documents.A compound index can also be a multikey index if one of the fields is an array.
+:Multikey index: A multikey index is an index on an array field. Each element in the array gets an index key, which supports efficient querying against array fields. Both single field and compound indexes can have an array field, so there are both multikey single field indexes and multikey compound indexes.
 
 
+:Use createIndex() to create a new index in a collection. Within the parentheses of createIndex(), include an object that contains the field and sort order.
+db.customers.createIndex({
+  birthdate: 1
+})
+
+:Use getIndexes() to see all the indexes created in a collection.
+db.customers.getIndexes()
+
+:Use explain() in a collection when running a query to see the Execution plan. This plan provides the details of the execution stages (IXSCAN , COLLSCAN, FETCH, SORT, etc.).
+-The IXSCAN stage indicates the query is using an index and what index is being selected.
+-The COLLSCAN stage indicates a collection scan is perform, not using any indexes.
+-The FETCH stage indicates documents are being read from the collection.
+-The SORT stage indicates documents are being sorted in memory.
 
 
+:Within the parentheses of createIndex(), include an object that contains two or more fields and their sort order.
 
+db.customers.createIndex({
+  active:1, 
+  birthdate:-1,
+  name:1
+})
+
+
+:The order of the fields matters when creating the index and the sort order. It is recommended to list the fields in the following order: Equality, Sort, and Range.
+
+Equality: field/s that matches on a single field value in a query
+Sort: field/s that orders the results by in a query
+Range: field/s that the query filter in a range of valid values
+The following query includes an equality match on the active field, a sort on birthday (descending) and name (ascending), and a range query on birthday too.
+
+db.customers.find({
+  birthdate: {
+    $gte:ISODate("1977-01-01")
+    },
+    active:true
+    }).sort({
+      birthdate:-1, 
+      name:1
+      })
+
+:dropIndex() to delete an existing index from a collection. Within the parentheses of dropIndex(), include an object representing the index key or provide the index name as a string.
+Delete index by name:
+db.customers.dropIndex(
+  'active_1_birthdate_-1_name_1'
+)
+Delete index by key:
+db.customers.dropIndex({
+  active:1,
+  birthdate:-1, 
+  name:1
+})
+
+:dropIndexes() to delete all the indexes from a collection, with the exception of the default index on _id.
+db.customers.dropIndexes()
+
+:hideIndexes:
 }
 */
