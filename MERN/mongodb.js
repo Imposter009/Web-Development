@@ -470,4 +470,11 @@ db.customers.dropIndexes()
 
 :hideIndexes:
 }
+
+
+
+
+
+!MONGOOSE
+:
 */
