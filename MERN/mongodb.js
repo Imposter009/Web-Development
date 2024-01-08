@@ -470,6 +470,14 @@ db.customers.dropIndexes()
 
 :hideIndexes:
 }
+>Mongodump command is used to take backup of complete database or some collections
+mongodump  --db accounts 
+Above command takes backup of database accounts and stores into a directory named dump
+
+>Mongorestore command is used to restore database
+mongorestore --db accounts dump/accounts
+Above command restore your database accounts from backup directory dump
+
 
 
 
