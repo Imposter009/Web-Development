@@ -121,11 +121,11 @@ db.< collectionName >.replaceOne( filterObject, updateObject ) Overwrites other 
 db.< collectionName >.deleteMany( filterObject , optons)
 db.< collectionName >.deleteOne( filterObject, options )
    
-:
+
 {
   >You need only one `MongoClient` instance per Atlas cluster for your application. Having more than one `MongoClient` instance for a single Atlas cluster in your application will increase costs and negatively impact the performance of your database.
   >BSON-encoded documents are converted automatically by the driver. This means that you can use the data immediately in your application as normal JSON and access properties by using dot notation. The driver handles the conversion from BSON to JSON for you.
-  
+  >** Enviroment Variable** : To use environment variable we can use a npm package called dotenv which will create new process.env variables.
   ?>NodeJs Drive::
   {
     // inserting data in db using node driver
@@ -484,5 +484,47 @@ Above command restore your database accounts from backup directory dump
 
 
 !MONGOOSE
-:
+>Mongoose is a Node.js-based library for Object Data Modeling (ODM) for MongoDB.It helps developers enforce a specific schema at the application layer. Mongoose also manages relationships between data, provides schema validation, and translates between objects in code and the representation of those objects in MongoDB.
+> MongoDB is a document-oriented NoSQL database, while Mongoose is an Object Data Modeling (ODM) library for Node. js that provides a higher-level abstraction layer on top of MongoDB, allowing developers to define data models using a schema-based approach.
+>Schema is the specification according to which data object is created in Database.. eg::
+{
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const taskSchema = new Schema({
+    title:  String,
+    status: Boolean,
+    date: { type: Date, default: Date.now },   
+    age: { type: Number, default:18, min: 18, max: 65, required :true }
+    // default value of Number is 18 and should be between 18-65, and can't be null or empty
+  });
+}
+
+>Model are similar to classes, they create a Class from Schema. These classes(i.e Models) can be used to create each new database object.
+{
+  const mongoose = require('mongoose');
+  const { Schema } =  mongoose;
+const taskSchema = new Schema({
+    title:  String,
+    status: Boolean,
+    date: { type: Date, default: Date.now },    
+  });
+  
+const Task = mongoose.model('Task', taskSchema);  //Task Model to create new database objects for `tasks` Collection
+}
+
+>To Create new obejct in database we can use new keyword and create an object from Model. We can use save() function to save the object in database. Unless, you call save function - the object remains in memory. If your collection not yet created in MongoDB, it will created with name of Model pluralized (e.g Task will make a collection named tasks)
+server.post("/task",function(req,res){
+    let task = new Task();
+
+    task.title = "shopping";
+    task.status = true;
+    task.date = new Date();
+
+    task.save();
+})
+
+>
+
+
 */
