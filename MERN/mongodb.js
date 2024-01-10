@@ -513,6 +513,7 @@ const taskSchema = new Schema({
 const Task = mongoose.model('Task', taskSchema);  //Task Model to create new database objects for `tasks` Collection
 }
 
+?creating object 
 >To Create new obejct in database we can use new keyword and create an object from Model. We can use save() function to save the object in database. Unless, you call save function - the object remains in memory. If your collection not yet created in MongoDB, it will created with name of Model pluralized (e.g Task will make a collection named tasks)
 server.post("/task",function(req,res){
     let task = new Task();
@@ -524,7 +525,20 @@ server.post("/task",function(req,res){
     task.save();
 })
 
->
+?Read objects
+To read new obejcts from database, one can use find query or similar queries. find queries also contain some conditions which can restrict what kind of data objects you want to read from database.
+
+server.get("/task/:name",function(req,res){
+    Task.findOne({name:req.params.name},function(err,doc){
+        console.log(doc)  // this will contain db object
+    })
+})
+
+server.get("/tasks",function(req,res){
+    Task.find({},function(err,docs){
+        console.log(docs)  // this is an array which contains all task objects
+    })
+})
 
 
 */
