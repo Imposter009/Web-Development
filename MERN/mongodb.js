@@ -486,9 +486,15 @@ Above command restore your database accounts from backup directory dump
 !MONGOOSE
 >Mongoose is a Node.js-based library for Object Data Modeling (ODM) for MongoDB.It helps developers enforce a specific schema at the application layer. Mongoose also manages relationships between data, provides schema validation, and translates between objects in code and the representation of those objects in MongoDB.
 > MongoDB is a document-oriented NoSQL database, while Mongoose is an Object Data Modeling (ODM) library for Node. js that provides a higher-level abstraction layer on top of MongoDB, allowing developers to define data models using a schema-based approach.
->Schema is the specification according to which data object is created in Database.. eg::
 {
 const mongoose = require('mongoose');
+main().catch(err => console.log(err));
+async function main() {
+  await mongoose.connect('mongodb://127.0.0.1:27017/test');
+  
+  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+}
+>Schema is the specification according to which data object is created in Database.Each schema maps to a MongoDB collection and defines the shape of the documents within that collection.. eg::
 const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
@@ -515,7 +521,7 @@ const Task = mongoose.model('Task', taskSchema);  //Task Model to create new dat
 
 ?creating object 
 >To Create new obejct in database we can use new keyword and create an object from Model. We can use save() function to save the object in database. Unless, you call save function - the object remains in memory. If your collection not yet created in MongoDB, it will created with name of Model pluralized (e.g Task will make a collection named tasks)
-server.post("/task",function(req,res){
+  server.post("/task",function(req,res){
     let task = new Task();
 
     task.title = "shopping";
@@ -523,22 +529,46 @@ server.post("/task",function(req,res){
     task.date = new Date();
 
     task.save();
-})
+  })
 
 ?Read objects
 To read new obejcts from database, one can use find query or similar queries. find queries also contain some conditions which can restrict what kind of data objects you want to read from database.
 
-server.get("/task/:name",function(req,res){
+ server.get("/task/:name",function(req,res){
     Task.findOne({name:req.params.name},function(err,doc){
+        console.log(doc)  // this will contain db object
+    })
+ })
+
+ server.get("/tasks",function(req,res){
+    Task.find({},function(err,docs){
+        console.log(docs)  // this is an array which contains all task objects
+    })
+ })
+
+?updating objects
+:First scenario is covered using this query. Here you are overwriting all properties and resulting object will only have name property.
+server.put("/task/:name",function(req,res){
+    Task.findOneAndReplace({name:req.params.name},{name:'YouStart'},{new:true},function(err,doc){
+        console.log(doc)  // this will contain new db object
+    })
+})
+:Second scenario is covered using this query. Here you are only changing value of name property in existing object without changing other values in Object.
+server.put("/task/:name",function(req,res){
+    Task.findOneAndUpdate({name:req.params.name},{name:'YouStart'},{new:true},function(err,doc){
         console.log(doc)  // this will contain db object
     })
 })
 
-server.get("/tasks",function(req,res){
-    Task.find({},function(err,docs){
-        console.log(docs)  // this is an array which contains all task objects
+?Delete - existing objects
+server.delete("/task/:name",function(req,res){
+    Task.findOneAndDelete({name:req.params.name},function(err,doc){
+        console.log(doc)  // this will contain deleted object object
     })
 })
 
 
 */
+
+
+
