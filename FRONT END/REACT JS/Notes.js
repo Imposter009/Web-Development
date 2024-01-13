@@ -1,4 +1,6 @@
-l// function based component 
+!REACT
+
+// function based component 
 import React, { useState } from 'react'
 
 export default function Notes() {
