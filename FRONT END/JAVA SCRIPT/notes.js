@@ -157,7 +157,9 @@ console.log(element); });
 +setAttribute( attr, value ) //to set the attribute value
 eg:: <p id="abc"></p>
 var para=document.querySelector("p");
-para.setAttribute(id,125)
+para.setAttribute("id","125")
+para.removeAttribute("id")
+para.hasAttribute("id")
 
 ?Traversing in node
 +node.parentElement: will give the parent node of the current node
@@ -168,9 +170,12 @@ para.setAttribute(id,125)
 +node.nextElementSibling: will give the previous sibling node of the current node
 
 
-+node.style : to change the CSS of any node
++node.style.cssText="background-color: red; color:red; " : to change the CSS of any node. it will over-write the existing CSS property of that node. .cssText actually returns the current CSS so either we can overwrite it or we can add to it by using:: node.style.cssText +="border:red; "
++node.style.background="red" : to change the particular CSS of any node. it will add to the existing CSS
++getComputedStyle(node): will give us all the style attached with this particular node
 +node.className="value "
 +node.id="value "
++node.classList():classList property returns the class name(s) of an element, as a DOMTokenList object.to add a new class we can use add method: node.classList.add("new_classname").to remove a class we can use add method:  node.classList.remove("classname"). to replace a new class we can use add method:  node.classList.replace("calss_to_be_replace","new_classname"). node.classList.contains("classname") will return true or false if it contains this class or not. node.classList.toggle("classname"):if present then remove if not then add.
 
 
 ?Insert/Delete Elements
@@ -181,6 +186,25 @@ let el = document.createElement(“div“) //will create a div tag
 +parent_node.insertAfter(el_to_be_inseted, pos_of_el_jiske_baad_insert_karna_hai): will insert ele inside the parent node but at a pos after the given pos
 +parent_node.removeChild(which child we wanna remove ) //removes the Child node.
 
++node.cloneNode():: let clone=node_to_be_cloned.cloneNode(true)
++parent_node.replaceChild(item, replace): to replace an child element (replace) with a new element (item)
++node.insertAdjacentHTML():this method of the Element interface parses the specified text as HTML.
+node.insertAdjacentHTML('position', "text") eg:node.insertAdjacentHTML('beforeend', "<h2>new heading</h2>")
+{
+position::
+'beforebegin': Before the selected element itself.
+'afterbegin': Just inside the selected  element, before its first child.
+'beforeend': Just inside the selected  element, after its last child.
+'afterend': After the selected  element itself.
+eg::
+<--beforebegin-->
+ <div id='txt'> <--selected-->
+ <--afterbegin-->
+ <h1>hello</h1>
+ <--beforeend-->
+ </div>
+ <--afterend-->
+}
 +node.prepend( el ) //adds at the start of node (inside)
 +node.before( el ) //adds before the node (outside)
 +node.after( el ) //adds after the node (outside)
@@ -198,7 +222,7 @@ let el = document.createElement(“div“) //will create a div tag
 
 :Event Object:: It is a special object that has details about the event.All event handlers have access to the Event Object's properties and methods. node.event=(e)=>{e.type;e.target;}
 
->node.event()::
+?node.event()::
  let bt=document.querrySelector(#btn); 
  bt.onclick=()={
   //task
@@ -206,15 +230,20 @@ let el = document.createElement(“div“) //will create a div tag
  *prioirty of event handling: inline<node.event. iska mtlb hai ki agar koi event ke liye hamare code me inline handling hui hai aur js file me usi node ke liye event handle kiya hai to hamra js wala node.event hi work karega, inline wala nhi chalega
  *if we write more than one handler for same node for same event then only the handler in the last will work(that means it will overwrite all the previous handlers) 
 
->eventListner::
- node.addEventListner(event,callback)
+?eventListner::
+: node.addEventListner(event,callback)
  let bt=document.querrySelector(#btn); 
  bt.addEventListner(onClick,()=>{
  //  task
  });
  *if we use eventListner tab we can use different handlers for the same node and same event and all these handlers will execute.
- node.removeEventListner(event,callback)
- *Note : the callback reference should be same to remove. isliye we store this callback in a variable and use this variable
+: node.removeEventListner('event',callback)
+ *Note : the callback reference in removeEventListner should be same to remove. isliye we store this callback in a variable and use this variable
+
+:DOMContentLoaded: the browser fully loaded HTML and completed building the DOM tree. However, it hasn’t loaded external resources like stylesheets and images. In this event, you can start selecting DOM nodes or initialize the interface.::window.addEventListner("DOMContentLoaded",callback)
+
+:load – the browser fully loaded the HTML and also external resources like images and stylesheets.we can apply load event on the whole window as well as on any particular element :: window.addEventListner("load",callback). :: node.addEventListner("load",callback)
+
 !Prototypes
 
 !Object & Classes in JS
