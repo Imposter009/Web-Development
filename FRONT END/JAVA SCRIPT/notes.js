@@ -135,6 +135,7 @@ console.log(element); });
 !DOM
 :Document Object Model:: When a web page is loaded, the browser creates a Document Object Model (DOM) of the page
 :The window object represents an open window in a browser. It is browser’s object (not JavaScript’s) & is automatically created by browser.It is a global object with lots of properties & methods. alert, prompt, console.log are all window object functions only. window obj mtlb current tab/window. we use tis to access window specific properties.
+All global JavaScript objects, functions, and variables with the var keyword automatically become members of the window object.
 
 :hum apna pura ka pura HTML code ko javascript me use kr sakte hai. hamara HTML code ke har tag document naam ke object ke roop me window object me save ho jata hai, aur fir using this document object we can handle all our HTML tags and Code. DOM is a tree jaha har ek tag ek node ko represent karta hai. we follow a hierarchy. window->document->HTML->head & body
 :document object represent the root node of the HTML document. the section below the navigation section(URL tab) that comes in document obj, document obj is a part of window obj 
@@ -243,6 +244,42 @@ eg::
 :DOMContentLoaded: the browser fully loaded HTML and completed building the DOM tree. However, it hasn’t loaded external resources like stylesheets and images. In this event, you can start selecting DOM nodes or initialize the interface.::window.addEventListner("DOMContentLoaded",callback)
 
 :load – the browser fully loaded the HTML and also external resources like images and stylesheets.we can apply load event on the whole window as well as on any particular element :: window.addEventListner("load",callback). :: node.addEventListner("load",callback)
+
+:keydown/keyup/keypress:: The keydown and keyup events provide a code indicating which key is pressed, while keypress indicates which character was entered. For example, a lowercase "a" will be reported as 65 by keydown and keyup, but as 97 by keypress. An uppercase "A" is reported as 65 by all events.window.addEventListner("keydown",function(e){console.log(e.key)})
+
+:scroll:: The scroll event fires when the document view has been scrolled.It considers both scroll up and scroll down as same.::  window.addEventListner("scroll", function(){}).
+:wheel:: window.addEventListner("wheel", function(e){}). deltaX and deltaY are methods of the wheel object(e). deltaX::The horizontal (x-axis) scroll amount of the wheel. deltaY::	The vertical (y-axis) scroll amount of the wheel. if(deltaY<0) scroll up. if(deltaY>0)scroll down.
+*NOTE: pageYOffset: will give how much pixels we are already scrolled down i.e return pixels.
+
+:onfocus:: this event occurs when an element gets focus.:: node.addEventListner("focus", function())
+:blur:: this event fires when an element has lost focus.:: node.addEventListner("blur", function())
+:onchange:: this event occurs when an element gets entered by user gets changed.This event occurs when the value of an input or textarea element is changed. :: node.addEventListner("change", function())
+:oninput:: this event occurs when an element gets user input.:: node.addEventListner("input", function())
+
+*Event bubbling::In the event bubbling model, an event starts at the most specific element and then flows upward toward the least specific element (the document or even window). by default it is true. 
+{
+When you click the button, the click event occurs in the following order:
+button
+div with the id container
+body
+html
+document
+}
+
+*Event capturing::In the event capturing model, an event starts at the least specific element and flows downward toward the most specific element.to turn event capturing on:: addEventListner("click", fn(){},true) here it means he set useCapture as true.
+{
+When you click the button, the click event occurs in the following order:
+document
+html
+body
+div with the id container
+button
+}
+
+*event,stopPropagation:: agar hum chahte hai ki bs agar btn click hua hai to bubbling or capturing na ho to we use this. callback function me event pass hoga and us event ka ye method hai 
+
+
+
 
 !Prototypes
 
