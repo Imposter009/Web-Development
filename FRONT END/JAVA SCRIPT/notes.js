@@ -134,11 +134,35 @@ console.log(element); });
 
 !DOM
 :Document Object Model:: When a web page is loaded, the browser creates a Document Object Model (DOM) of the page
-:The window object represents an open window in a browser. It is browser’s object (not JavaScript’s) & is automatically created by browser.It is a global object with lots of properties & methods. alert, prompt, console.log are all window object functions only. window obj mtlb current tab/window. we use tis to access window specific properties.
+:document object represent the root node of the HTML document. the section below the navigation section(URL tab) that comes in document obj, document obj is a part of window obj 
+:Window object Model::The window object represents an open window in a browser. It is browser’s object (not JavaScript’s) & is automatically created by browser.It is a global object with lots of properties & methods. alert, prompt, console.log are all window object functions only. window obj mtlb current tab/window. we use tis to access window specific properties.
+{
+  +window.innerHeight - the inner height of the browser window (in pixels)
+  +window.innerWidth - the inner width of the browser window (in pixels)
+  *The innerWidth and innerHeight properties return the size of the page viewport inside the browser window (not including the borders and toolbars).
+  +The outerWidth and outerHeight properties return the size of the browser window itself.::window.outerHeight,::window.outerWidth
+  +The open() method opens a new browser window, or a new tab, depending on your browser settings and the parameter values.:: window.open(URL, name , features). feature mtlb height,width and all
+  +The close() method closes the current window.::window_reference,close()
+  
+  !window.location
+  The window.location object can be used to get the current page address (URL) and to redirect the browser to a new page.
+  +window.location.href returns the href (URL) of the current page
+  +window.location.hostname returns the domain name of the web host
+  +window.location.pathname returns the path and filename of the current page
+  +window.location.protocol returns the web protocol used (http: or https:)
+  +window.location.assign(URL) loads a new documentThe assign() method accepts an URL, navigate to the URL immediately, and make an entry in the browser’s history stack.
+  +window.location.replace(URL) method is similar to the assign() method except it doesn’t create a new entry in the browser’s history stack. Therefore, you cannot click the back button to go to the previous page.
+  
+  !window.navigator
+  :The Navigator object has properties that convey the browser’s information.
+  +navigator.platform
+  +navigator.cookiesEnabled
+}
+
 All global JavaScript objects, functions, and variables with the var keyword automatically become members of the window object.
 
 :hum apna pura ka pura HTML code ko javascript me use kr sakte hai. hamara HTML code ke har tag document naam ke object ke roop me window object me save ho jata hai, aur fir using this document object we can handle all our HTML tags and Code. DOM is a tree jaha har ek tag ek node ko represent karta hai. we follow a hierarchy. window->document->HTML->head & body
-:document object represent the root node of the HTML document. the section below the navigation section(URL tab) that comes in document obj, document obj is a part of window obj 
+
 
 ?DOM Manipulation
 +document.getElementById(“myId”)
@@ -276,7 +300,15 @@ div with the id container
 button
 }
 
-*event,stopPropagation:: agar hum chahte hai ki bs agar btn click hua hai to bubbling or capturing na ho to we use this. callback function me event pass hoga and us event ka ye method hai 
+*event.stopPropagation:: agar hum chahte hai ki bs agar btn click hua hai to bubbling or capturing na ho to we use this. callback function me event pass hoga and us event ka ye method hai. btn.addEventListner("click", function(event){event.stopPropagation;}) 
+
+
+
+!Time out & time interval
+:setTimeout(function, milliseconds)::Executes a function, after waiting a specified number of milliseconds.
+:setInterval(function, milliseconds)::Same as setTimeout(), but repeats the execution of the function continuously.
+:clearTimeout(timeout_id):: will end the timeout even if the time is not completed. let timeout_id= setTimeout(function(), 1000); clearTimeout(timeout_id);
+:clearInterval(timeout_id):: will end the timeout even if the time is not completed.
 
 
 
